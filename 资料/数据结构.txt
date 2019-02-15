@@ -1,15 +1,15 @@
-ÔÚ¼ÆËã»ú¿ÆÑ§ÖÐ£¬³ý·ÇÓÐÌØ±ðÉùÃ÷£¬ËùÓÐµÄ¶ÔÊý¶¼ÊÇÒÔ2Îªµ×µÄ
+åœ¨è®¡ç®—æœºç§‘å­¦ä¸­ï¼Œé™¤éžæœ‰ç‰¹åˆ«å£°æ˜Žï¼Œæ‰€æœ‰çš„å¯¹æ•°éƒ½æ˜¯ä»¥2ä¸ºåº•çš„
 
-¼¶Êý£º2^0+2^1+¡£¡£¡£¡£+2^N=2^N+1-1
-	A^0+A^1+¡£¡£¡£¡£+A^N=(A^N+1-1)/(A-1)
-Èô0<A<1£¬Ôò<=1/(1-A)
-¶ÔiÇóºÍ£¬ÇóºÍµÄÖµÎªN(N+1)/2
+çº§æ•°ï¼š2^0+2^1+ã€‚ã€‚ã€‚ã€‚+2^N=2^N+1-1
+	A^0+A^1+ã€‚ã€‚ã€‚ã€‚+A^N=(A^N+1-1)/(A-1)
+è‹¥0<A<1ï¼Œåˆ™<=1/(1-A)
+å¯¹iæ±‚å’Œï¼Œæ±‚å’Œçš„å€¼ä¸ºN(N+1)/2
 
-ÊýHN½Ð×öµ÷ºÍÊý£¬ÆäºÍ½Ð×öµ÷ºÍºÍ£¬ÏÂÃæ½üËÆÊ½ÖÐµÄÎó²îÇ÷ÏòÓÚr=0.57721566£¬Õâ¸öÖµ³ÆÎªÅ·À­³£Êý
-HN=1/iµÄÇóºÍÔ¼µÈÓÚlogeN
+æ•°HNå«åšè°ƒå’Œæ•°ï¼Œå…¶å’Œå«åšè°ƒå’Œå’Œï¼Œä¸‹é¢è¿‘ä¼¼å¼ä¸­çš„è¯¯å·®è¶‹å‘äºŽr=0.57721566ï¼Œè¿™ä¸ªå€¼ç§°ä¸ºæ¬§æ‹‰å¸¸æ•°
+HN=1/içš„æ±‚å’Œçº¦ç­‰äºŽlogeN
 
-×î´ó×ÓÐòÁÐºÍ(½öºÄ·ÑO(N)µÄÊ±¼ä)
-int MaxSubsequenceSum£¨const int A[],int N£©
+æœ€å¤§å­åºåˆ—å’Œ(ä»…è€—è´¹O(N)çš„æ—¶é—´)
+int MaxSubsequenceSumï¼ˆconst int A[],int Nï¼‰
 {
 	int ThisSum,MaxSum,j;
 
@@ -32,6 +32,6 @@ int MaxSubsequenceSum£¨const int A[],int N£©
 
 
 
-1. Ê¹ÓÃ¶ÓÁÐ½øÐÐÊ÷µÄÉú³É     add·½·¨    queue
-
+1. ä½¿ç”¨é˜Ÿåˆ—è¿›è¡Œæ ‘çš„ç”Ÿæˆ     addæ–¹æ³•    queue
+ 
 2.
