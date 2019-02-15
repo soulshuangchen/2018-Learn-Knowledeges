@@ -1,0 +1,90 @@
+1.根节点都是黑色的，NULL为黑色的    
+2.对任意节点，他到叶子节点的每一条路径（？？）都包含相同数目的黑色节点
+3.任意一个以黑色节点为根的子树也必定是一个红黑树
+5.每个红色节点的两个子节点都是黑色。(从每个叶子到根的所有路径上不能有两个连续的红色节点)
+
+4.必定是二叉排序树
+
+5.N个节点的RBT，最大高度是2log(N+1)
+
+6.高度考虑黑高
+
+7.节点颜色不一定，可能出现多个黑的
+
+8.case1： 父叔都变黑、爷变红、自变爷   （红黑树插入）
+需要继续进行调整
+
+if (parentof(x) == leftOf(parentOf(parentOf(x)))  P为G的左孩子
+Entry<K,V> y = rightOf(parentOf(parentOf(x)));	取得叔叔节点Y
+if(colorOf(y) == RED)  叔叔Y为红色，X可左可右
+	{
+	setColor(parentOf(x), BLACK); P染黑
+	setColor(y, BLACK);   Y染黑
+	setColor(parentOf(parentOf(x)),RED);  G染红
+	x = parentOf(parenOf(x));   X回溯至G
+	}
+
+
+case2：左旋父，子变父、变为case3    
+
+P为G的左孩子，Y为黑色，X为右孩子
+
+	else{   Y是黑色的
+	if(x == rightOf(parentOf(x)))     X是P的右孩子
+	{
+		x= parentOf(x);  X指向P         指针回溯
+		rotateLeft(x);   左旋P？？？？   因为P已经指向了原来X所在的位置，所以旋转实							际上是旋转P
+	}
+	}
+
+
+
+
+
+9.平衡二叉树：左右子树的高度之差的绝对值不超过1，左右子树都是平衡二叉树  AVL
+红黑树算是一种自平衡二叉查找树
+
+
+10.BST：二叉排序树   AVL：平衡二叉树      RBT：红黑树
+
+
+
+12：极端情况下的BST会退化为链表。   O(logN)-》O（N）   时间进化
+
+
+13：
+某结点的左子树与右子树的高度(深度)差即为该结点的平衡因子（BF,Balance Factor）。
+平衡二叉树上所有结点的平衡因子只可能是 -1，0 或 1。
+
+
+11：
+不可能直接插入黑色节点.  插入的是红色节点，只有这样才不会破坏红黑树的性质（黑高的大小）
+
+
+左旋转：
+
+private Node rotateLeft(Node h)
+{
+	Node x = h.right;
+	h.right = x.left;
+	x.left = h;
+	x.color = x.left.color;
+	x.left.color =	RED;
+	x.size = h.size;
+	h.size = size(h.left)+size(h.right) +1;
+	return x;
+}
+
+
+右旋转：
+private Node rotateRight(Node h)
+{
+	Node x = h.left;
+	h.left = x.right;
+	x.right = h;
+	x.color = x.right.color;
+	x.right.color =	RED;
+	x.size = h.size;
+	h.size = size(h.left)+size(h.right) +1;
+	return x;
+}

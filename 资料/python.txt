@@ -1,0 +1,1563 @@
+cd..是返回上一级
+cd G：跳转到G
+G：直接到G盘
+
+
+
+
+当确定要添加什么东西的时候，先写好这个事物的类或初始化（想好应该确定哪些东西）的地方，然后再在主函数中确定其在主函数应在哪些地方（哪些函数的形参中应该添加该东西的形参）出现，最后再通过主文件（cpp、py）确定出现该东西的地方的函数（其他py或cpp文件）应该如何修改
+主循环包含尽可能少的代码
+
+
+
+
+
+函数list（）将里面的东西转化为列表
+set(列表或字典中的值values)：清除里面重复的数据
+list3=list(set(list0))        一个新的列表
+list3.sort(key=list0.index)   按照原先键的顺序排列，实际不需要这个
+print(list3)
+
+
+
+title() 首字母大写
+upper() 全部大写
+lower() 全部小写
+Python使用加号（+）来合并字符串   full_name = first_name + " " + last_name
+使用+来合并first_name、空格和last_name，
+
+要在字符串中添加制表符，可使用字符组合\t  tab  \tpython \npython
+
+要确保字符串末尾没有空白，可使用方法rstrip()。
+剔除字符串开头的空白lstrip()
+同时剔除字符串两端的空白strip()
+
+Python使用两个乘号表示乘方运算  10 ** 6==1000000
+函数str()，它让Python将非字符串值表示为字符串：
+
+在Python中，注释用井号（#）标识。井号后面的内容都会被Python解释器忽略
+
+在Python中，用方括号（[]）来表示列表，并用逗号来分隔其中的元素
+bicycles = ['trek', 'cannondale', 'redline', 'specialized']
+Python将打印列表的内部表示，包括方括号
+
+Python为访问最后一个列表元素提供了一种特殊语法。通过将索引指定为-1，可让Python返回最后一个列表元素：
+这种约定也适用于其他负数索引，例如，索引-2返回倒数第二个列表元素，索引-3返回倒数第三个列表元素，
+
+方法append()将元素'ducati'添加到了列表末尾，不影响列表中的其他所有元素
+
+要反转列表元素的排列顺序，可使用方法reverse()
+方法reverse()永久性地修改列表元素的排列顺序，复原只须再来一遍
+
+使用函数len()可快速获悉列表的长度
+len(cars)
+
+motorcycles.append('ducati')
+['honda', 'yamaha', 'suzuki', 'ducati']
+
+motorcycles = []创建一个空列表
+
+使用方法insert()可在列表的任何位置添加新元素。为此，你需要指定新元素的索引和值。
+方法insert()在索引0处添加空间，并将值'ducati'存储到这个地方。这种操作将列表中既有的每个元素都右移一个位置。
+motorcycles.insert(0, 'ducati')
+
+如果知道要删除的元素在列表中的位置，可使用del语句。
+del motorcycles[0]
+
+方法pop()可删除列表末尾的元素，并让你能够接着使用它
+删除列表末尾的元素相当于弹出栈顶元素
+popped_motorcycle = motorcycles.pop()
+popped_motorcycle == suzuki
+motorcycles的末尾少了元素'suzuki'
+
+可以使用pop()来删除列表中任何位置的元素，只需在括号中指定要删除的元素的索引即可
+first_owned = motorcycles.pop(0)
+first_owned == honda
+
+不知道要从列表中删除的值所处的位置，使用方法remove()。
+motorcycles.remove('ducati')
+使用remove()从列表中删除元素时，也可接着使用它的值
+方法remove()只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要使用循环来判断是否删除了所有这样的值
+
+
+永久性排序
+方法sort()，按字母顺序排列的，从小到大，按照key排序，不管后面
+只需向sort()方法传递参数reverse=True，相反的顺序排列列表元素
+cars.sort(reverse=True)
+
+要保留列表元素原来的排列顺序，同时以特定的顺序呈现它们，可使用函数sorted()
+
+
+该缩进的地方就要缩进，不缩进反而会出错，，比如：
+
+if xxxxxx：
+
+（空格）xxxxx
+
+或者
+
+def xxxxxx：
+
+（空格）xxxxx
+
+还有
+
+for xxxxxx：
+
+（空格）xxxxx
+
+一句话 有冒号的下一行往往要缩进，该缩进就缩进
+
+for magician in magicians:
+	print(magician)
+这行代码让Python从列表magicians中取出一个名字，并将其存储在变量magician中
+
+每个缩进的代码行都是循环的一部分，且将针对列表中的每个值都执行一次
+for magician in magicians:
+   print(magician.title() + ", that was a great trick!")
+   print("I can't wait to see your next trick, " + magician.title() + ".\n")
+
+Python函数range()让你能够轻松地生成一系列的数字。
+for value in range(1,5):
+	print(value)
+实际上它不会打印数字5（类似于区间，begin()、end()。迭代器）
+函数range()让Python从你指定的第一个值开始数，并在到达你指定的第二个值后停止，因此输出不包含第二个值（这里为5）。
+
+要创建数字列表，可使用函数list()将range()的结果直接转换为列表。将range()作为list()的参数。
+numbers = list(range(1,6))
+使用函数range()时，还可指定步长。
+even_numbers = list(range(2,11,2))       [2, 4, 6, 8, 10]
+函数range()从2开始数，然后不断地加2，直到达到或超过终值（11）。
+
+列表解析让你只需编写一行代码就能生成这样的列表
+列表解析将for循环和创建新元素的代码合并成一行，并自动附加新元素。
+squares = [value**2 for value in range(1,11)]
+print(squares)
+首先指定一个描述性的列表名，如squares；然后，指定一个左方括号，并定义一个表达式，用于生成你要存储到列表中的值
+
+重点： 表达式可以任意写，按照数学表达式写法即可 ！！！
+这里的for语句末尾没有冒号。
+
+
+处理列表的部分元素——Python称之为切片
+要创建切片，可指定要使用的第一个元素和最后一个元素的索引。与函数range()一样，Python在到达你指定的第二个索引前面的元素后停止。索引0~3，这将输出分别为0、1和2的元素。
+print(players[0:3])
+如果你没有指定第一个索引，Python将自动从列表开头开始：
+要让切片终止于列表末尾，省略终止索引：print(players[2:])
+如果你要输出名单上的最后三名队员，可使用切片players[-3:]
+
+
+切片在用的时候若改变了切片中元素的值，那么对应的原始数据的值也会发生变化
+
+
+遍历列表的部分元素，可在for循环中使用切片
+for player in players[:3]:
+
+
+要复制列表，可创建一个包含整个列表的切片，方法是同时省略起始索引和终止索引（[:]）。
+my_foods = ['pizza', 'falafel', 'carrot cake']
+friend_foods = my_foods[:]//副本赋给friend_foods
+#可以进行下面的语句
+my_foods.append('cannoli')
+friend_foods.append('ice cream')
+
+
+#无法进行上面的操作
+friend_foods = my_foods//这里将my_foods赋给friend_foods
+这种语法实际上是让Python将新变量friend_foods关联到包含在my_foods中的列表，因此这两个变量都指向同一个列表
+
+不可变的列表被称为元组。//c++中的常量const
+dimensions = (200, 50)  就是元组，里面的200和50都是不可变的。
+类似列表但是用了圆括号
+
+虽然不能修改元组的元素，但可以给存储元组的变量（即前面定义的名字）赋值。因此，如果要修改前述矩形的尺寸，可重新定义整个元组：
+dimensions = (200, 50)
+print(dimension)
+dimensions = (400, 100)
+print(dimension)
+两次输出的值不一样，说明给元组变量赋值是合法的
+其余的用法与列表相同
+
+
+for car in cars:
+   if car == 'bmw':
+	print(car.upper())
+   else:
+	print(car.title())
+在Python中检查是否相等时区分大小写
+
+car = 'Audi'
+car.lower() == 'audi'
+True
+函数lower()不会修改存储在变量car中的值，因此>>> car的结果仍为'Audi'
+
+
+检查是否两个条件都为True，and，age_0 >= 21 and age_1 >= 21
+为改善可读性，可将每个测试都分别放在一对括号内
+(age_0 >= 21) and (age_1 >= 21)
+
+关键字or也能够让你检查多个条件，但只要至少有一个条件满足，就能通过整个测试
+
+要判断特定的值是否已包含在列表中，可使用关键字in。
+'mushrooms' in requested_toppings//requested_toppings是一个列表
+还有些时候，确定特定的值未包含在列表中很重要；在这种情况下，可使用关键字not in。
+banned_users = ['andrew', 'carolina', 'david']
+user = 'marie'
+if user not in banned_users:
+
+if-else语句块类似于简单的if语句，但其中的else语句让你能够指定条件测试未通过时要执行的操作。
+经常需要检查超过两个的情形，为此可使用Python提供的if-elif-else结构。
+if age < 4:
+	print("Your admission cost is $0.")
+elif age < 18:
+	print("Your admission cost is $5.")
+elif：
+elif：
+else:
+	print("Your admission cost is $10.")
+elif代码行其实是另一个if测试，它仅在前面的测试未通过时才会运行。
+
+print("Your admission cost is $" + str(price) + ".")  用str是因为price为数字，不是字符
+整数转换为字符串
+可根据需要使用任意数量的elif代码块
+Python并不要求if-elif结构后面必须有else代码块
+
+在运行for循环前确定列表是否为空很重要。
+在if语句中将列表名用在条件表达式中时，Python将在列表至少包含一个元素时返回True，并在列表为空时返回False。
+requested_toppings = []
+if requested_toppings:
+else:
+
+在诸如==、>=和<=等比较运算符两边各添加一个空格
+
+Python字典：
+alien_0 = {'color': 'green', 'points': 5}
+print(alien_0['color'])
+print(alien_0['points'])  5
+字典alien_0存储了外星人的颜色和点数。
+
+在Python中，字典是一系列“键—值”对。每个键都与一个值相关联
+在Python中，字典用放在花括号{}中的一系列键—值对表示
+键—值对是两个相关联的值。指定键时，Python将返回与之相关联的值。
+键和值之间用冒号分隔，而键—值对之间用逗号分隔
+字符串'color'是一个键，与之相关联的值为'green'。
+
+要获取与键相关联的值，可依次指定字典名和放在方括号内的键
+print(alien_0['color'])
+
+字典是一种动态结构，可随时在其中添加键—值对。要添加键—值对，可依次指定字典名、用方括号括起的键和相关联的值。
+alien_0['x_position'] = 0
+键—值对的排列顺序与添加顺序不同。Python不关心键—值对的添加顺序，而只关心键和值之间的关联关系。
+
+要修改字典中的值，可依次指定字典名、用方括号括起的键以及与该键相关联的新值。
+alien_0['speed'] = fast
+
+对于字典中不再需要的信息，可使用del语句将相应的键—值对彻底删除
+del alien_0['points']
+Python将键'points'从字典alien_0中删除，同时删除与这个键相关联的值。
+
+
+字典可以存储一个对象的多种信息，也可以使用字典来存储众多对象的同一种信息
+
+可遍历字典的所有键—值对、键或值。
+1.遍历所有的键—值对
+要编写用于遍历字典的for循环，可声明两个变量，用于存储键—值对中的键和值。
+for key, value in user_0.items():
+for语句的第二部分包含字典名和方法items()，它返回一个键—值对列表
+for循环依次将每个键—值对存储到指定的两个变量中
+
+
+即便遍历字典时，键—值对的返回顺序也与存储顺序不同（貌似是按照key（键）的存储顺序相反的顺序遍历）
+
+代码行让Python提取字典favorite_languages中的所有键
+for name in favorite_languages.keys():
+遍历字典时，会默认遍历所有的键，因此，如果将上述代码中的for name in favorite_languages.keys():替换为for name in favorite_languages:，输出将不变。
+
+如果显式地使用方法keys()可让代码更容易理解
+if name in friends:
+print(" Hi " + name.title() +", I see your favorite language is " +favorite_languages[name].title() + "!")
+为访问喜欢的语言，我们使用了字典名，并将变量name的当前值作为键
+
+你 还可以使用keys()确定某个人是否接受了调查。
+if 'erin' not in favorite_languages.keys():     这地方是要带单引号的
+方法keys()并非只能用于遍历；实际上，它返回一个列表，其中包含字典中的所有键，
+
+要以特定的顺序返回元素，一种办法是在for循环中对返回的键进行排序。为此，可使用函数sorted()来获得按特定顺序排列的键列表的副本：
+for name in sorted(favorite_languages.keys()):
+sorted只是对顺序排了一次，并不影响原来的顺序
+
+如果你感兴趣的主要是字典包含的值，可使用方法values()，它返回一个值列表
+为剔除重复项，可使用集合（set）。集合类似于列表，但每个元素都必须是独一无二的：
+for language in set(favorite_languages.values()):
+set()来提取不同的语言
+
+要将一系列字典存储在列表中，或将列表作为值存储在字典中，这称为嵌套。
+aliens = [alien_0, alien_1, alien_2] #1、2、3都是一个字典
+aliens = []
+for alien_number in range(30):
+	new_alien = {'color': 'green', 'points': 5, 'speed': 'slow'}
+	aliens.append(new_alien)
+for alien in aliens[:5]:
+
+将列表存储在字典中：
+pizza = {
+	'crust': 'thick',、
+	'toppings': ['mushrooms', 'extra cheese'],
+	}
+for topping in pizza['toppings']:
+	print("\t" + topping)
+
+
+每当需要在字典中将一个键关联到多个值时，都可以在字典中嵌套一个列表。
+favorite_languages = {'jen': ['python', 'ruby'],'sarah': ['c'],'edward': ['ruby','go'],'phil': ['python','haskell'],}
+for name, languages in favorite_languages.items():
+因为要返回键值对，所以用item方法
+
+在字典中嵌套字典：
+users = {
+	'aeinstein': {
+	'first': 'albert',
+	'last': 'einstein',
+	'location': 'princeton',
+	},
+	'mcurie': {
+	'first': 'marie',
+	'last': 'curie',
+	'location': 'paris',
+	},
+}
+for username, user_info in users.items():
+	print("\nUsername: " + username)
+	full_name = user_info['first'] + " " + user_info['last']
+	location = user_info['location']
+	print("\tFull name: " + full_name.title())
+	print("\tLocation: " + location.title())
+
+函数input()让程序暂停运行，等待用户输入一些文本。获取用户输入后，Python将其存储在一个变量中，以方便使用。
+message = input("Tell me something, and I will repeat it back to you: ")
+print(message)
+函数input()接受一个参数：即要向用户显示的提示或说明，让用户知道该如何做。
+
+
+用户将看到提示后，程序等待用户输入，并在用户按回车键后继续运行。输入存储在变量message中
+print(message)将输入呈现给用户
+Tell me something, and I will repeat it back to you: Hello everyone!
+Hello everyone!
+
+可将提示存储在一个变量中，再将该变量传递给函数input()。
+prompt = "If you tell us who you are, we can personalize the messages you see."
+prompt += "\nWhat is your first name? "
+name = input(prompt)
+
+使用函数input()时，Python将用户输入解读为字符串。
+age = input("How old are you? ")
+在输入一个数字后，age所代表的就是这个数字表示的字符串，例如：‘21’
+用户输入的数值的字符串表示。
+
+若想让输入进行比较，有两种方式：
+1.age转化为数字，使用int()方法。  age=int(age)     也可以使用float()
+2.18转化为字符串，使用str()方法。  str(18)
+
+求模运算符（%）它将两个数相除并返回余数
+
+while循环格式：
+current_number = 1
+while current_number <= 5:
+	print(current_number)
+	current_number += 1
+
+message = ""。变量message的初始值设置为空字符串""
+
+定义一个变量，用于判断整个程序是否处于活动状态。这个变量被称为“标志”
+flag=True
+while flag:
+	xxxxxxxxxxxxxxx
+	xxxxxxxxxxxxxxx
+
+
+break与c++用法相同，不同点在于break后面不需要“；”
+
+continue是使程序不进行它下面的语句，返回循环开头，进行下一次循环
+
+要在一个列表里删除所有相同的元素，使用while循环和remove()方法
+while 'cat' in pets:
+	pets.remove('cat')
+
+
+#空字典
+responses = {}
+# 设置一个标志，指出调查是否继续
+polling_active = True
+while polling_active:
+# 提示输入被调查者的名字和回答
+	name = input("\nWhat is your name? ")
+	response = input("Which mountain would you like to climb someday? ")
+# 将答卷存储在字典中
+	responses[name] = response
+# 看看是否还有人要参与调查
+	repeat = input("Would you like to let another person respond? (yes/ no) ")
+	if repeat == 'no':
+		polling_active = False
+# 调查结束，显示结果
+print("\n--- Poll Results ---")
+for name, response in responses.items():
+	print(name + " would like to climb " + response + ".")
+
+
+定义函数：
+def greet_user():
+	"""显示简单的问候语"""
+	print("Hello!")
+greet_user()
+
+"""三个单独的双引号效果和/*一样，也和*/一样
+文档字符串（docstring）的注释，描述了函数是做什么的。
+
+关键字def来告诉Python你要定义一个函数。
+紧跟在def greet_user():后面的所有缩进行构成了函数体。
+
+传递实参：
+def describe_pet(animal_type, pet_name):
+describe_pet('hamster', 'harry')
+参数一一对应
+
+关键字实参
+describe_pet(animal_type='hamster', pet_name='harry')
+调用这个函数，我们向Python明确地指出了各个实参对应的形参。关键字实参的顺序无关紧要。不像上面
+
+默认参数（类似于类的构造）
+给每个形参指定默认值。给形参指定默认值后，可在函数调用中省略相应的实参。
+def describe_pet(pet_name, animal_type='dog'):
+#在输入实参时就可以省略一个实参值
+describe_pet(pet_name='willie')
+#Python将这个实参视为位置实参，所以在定义的时候与上面的形参定义互换，名字在前，类型在后
+
+混合使用位置实参、关键字实参和默认值，通常有多种等效的函数调用方式
+def describe_pet(pet_name, animal_type='dog'):
+这个的调用方式可以使用上面所提到的所有的调用方式
+
+
+为让形参变成可选的，可给实参middle_name指定一个默认值——空字符串，并将其移到形参列表的末尾。并在用户没有提供中间名时不使用这个实参，
+在定义函数时，做出判断：
+def get_formatted_name(first_name, last_name, middle_name=''):
+	"""返回整洁的姓名"""
+	if middle_name:
+		full_name = first_name + ' ' + middle_name + ' ' + last_name
+	else:
+		full_name = first_name + ' ' + last_name
+	return full_name.title()
+
+
+def build_person(first_name, last_name, age=''):
+	"""返回一个字典，其中包含有关一个人的信息"""
+	person = {'first': first_name, 'last': last_name}
+	if age:
+		person['age'] = age
+	return person
+musician = build_person('jimi', 'hendrix', age=27)
+print(musician)
+
+
+
+传递列表
+def greet_users(names):
+	"""向列表中的每位用户都发出简单的问候"""
+	for name in names:
+		msg = "Hello, " + name.title() + "!"
+		print(msg)
+usernames = ['hannah', 'ty', 'margot']
+greet_users(usernames)#这个usernames是列表的变量名
+
+在函数中对这个列表所做的任何修改都是永久性的（相当于传递列表原件？？）
+每个函数都应只负责一项具体的工作。
+
+
+为了保留原来的列表，可向函数传递列表的副本而不是原件
+要将列表的副本传递给函数，可以像下面这样做：
+function_name(list_name[:])
+切片表示法[:]创建列表的副本，，如果不想清空未打印的设计列表，可像下面这样调用print_models()：
+print_models(unprinted_designs[:], completed_models)
+函数所做的修改不会影响到列表.
+函数使用现成列表可避免花时间和内存创建副本
+
+
+函数内传递任意数量的实参：
+函数只有一个形参*toppings，但不管调用语句提供了多少实参，这个形参都将它们统统收入囊中：
+def make_pizza(*toppings):
+	"""概述要制作的比萨"""
+	print("\nMaking a pizza with the following toppings:")
+	for topping in toppings:
+		print("- " + topping)
+形参名*toppings中的星号让Python创建一个名为toppings的空元组，并将收到的所有值都封装到这个元组
+
+如果要让函数接受不同类型的实参，必须在函数定义中将接纳任意数量实参的形参放在最后（与可忽略的形参一致）
+def make_pizza(size, *toppings):
+
+需要接受任意数量的实参，但预先不知道传递给函数的会是什么样的信息。在这种情况下，可将函数编写成能够接受任意数量的键—值对
+
+def build_profile(first, last, **user_info):
+	"""创建一个字典，其中包含我们知道的有关用户的一切"""
+	profile = {}
+	profile['first_name'] = first
+	profile['last_name'] = last
+	for key, value in user_info.items():
+		profile[key] = value
+	return profile
+
+user_profile = build_profile('albert', 'einstein',
+			location='princeton',
+			field='physics')
+print(user_profile)
+
+形参**user_info中的两个星号让Python创建一个名为user_info的空字典，并将收到的所有名称—值对都封装到这个字典中。
+
+将函数存储在被称为模块的独立文件中，再将模块导入到主程序中。
+import语句允许在当前运行的程序文件中使用模块中的代码。
+
+要让函数是可导入的，得先创建模块。模块是扩展名为.py的文件，包含要导入到程序中的代码。
+
+在pizza.py所在的目录中创建另一个名为making_pizzas.py的文件，这个文件导入刚创建的模块，再调用make_pizza()两次：
+
+#make_pizza()函数在pizza.py文件中
+import pizza
+pizza.make_pizza(16, 'pepperoni')
+pizza.make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+#这个程序体在文件making_pizzas.py中
+
+import pizza让Python打开文件pizza.py，并将其中的所有函数都复制到这个程序中
+要调用被导入的模块中的函数，可指定导入的模块的名称pizza和函数名make_pizza()，并用句点分隔它们
+
+
+导入特定的函数：
+#module_name为py文件的名字，function_0为文件里面定义的函数的名字
+from module_name import function_0, function_1, function_2
+
+函数指定另一个名称，创建一个别名：要给函数指定这种特殊外号，需要在导入它时这样做。
+在import语句中使用make_pizza as mp
+#
+from pizza import make_pizza as mp
+mp(16, 'pepperoni')
+
+
+使用as 给模块指定别名：import pizza as p
+p.make_pizza(16, 'pepperoni')
+
+
+使用星号（*）运算符可让Python导入模块中的所有函数：
+from pizza import *
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+由于导入了每个函数，可通过名称来调用每个函数，而无需使用句点表示法
+
+定义函数时，给形参指定默认值时，等号两边不要有空格：
+
+
+
+
+类：
+根据约定，在Python中，首字母大写的名称指的是类。
+class Dog():
+	"""一次模拟小狗的简单尝试"""
+	def __init__(self, name, age):
+		"""初始化属性name和age"""
+		self.name = name
+		self.age = age
+这个类定义中的括号是空的，因为我们要从空白创建这个类
+
+方法__init__()是一个特殊的方法，开头和末尾各有两个下划线，这是一种约定
+形参self必不可少，还必须位于其他形参的前面
+
+每个与类相关联的方法调用都自动传递实参self，它是一个指向实例本身的引用，让实例能够访问类中的属性和方法。
+我们将通过实参向Dog()传递名字和年龄；self会自动传递，因此我们不需要传递它。每当我们根据Dog类创建实例时，都只需给最后两个形参（name和age）提供值。
+#实例化
+my_dog = Dog('willie', 6)
+
+以self为前缀的变量都可供类中的所有方法使用，我们还可以通过类的任何实例来访问这些变量。
+
+可通过实例访问的变量称为属性，self.name = name获取存储在形参name中的值，并将其存储到变量name中，然后该变量被关联到当前创建的实例（？？？？看不懂）
+
+class Dog():
+--snip--
+my_dog = Dog('willie', 6)
+my_dog.sit()
+my_dog.roll_over()
+print("My dog's name is " + my_dog.name.title() + ".")
+print("My dog is " + str(my_dog.age) + " years old.")
+
+#方法__init__()创建一个表示特定小狗的示例，并使用我们提供的值来设置属性name和age
+他没有显式返回值（无return），Python自动返回一个表示这条小狗的实例
+这个实例存储在变量my_dog中
+
+类中的每个属性都必须有初始值，哪怕这个值是0或空字符串。（即self中的初始化，属性（变量）值为0）
+
+修改属性的值：
+1.直接修改属性的值:  my_new_car.odometer_reading = 23
+2.通过方法修改属性的值:
+#这个定义是在类内部定义的
+def update_odometer(self, mileage):
+	"""将里程表读数设置为指定的值"""
+	self.odometer_reading = mileage
+
+my_new_car.update_odometer(23)
+my_new_car.read_odometer()
+
+
+类的继承：
+class ElectricCar(Car):
+	"""电动汽车的独特之处"""
+	def __init__(self, make, model, year):
+		"""初始化父类的属性"""
+		super().__init__(make, model, year)
+
+my_tesla = ElectricCar('tesla', 'model s', 2016)
+print(my_tesla.get_descriptive_name())
+
+创建子类时，父类必须包含在当前文件中，且位于子类前面。
+
+定义子类时，必须在括号内指定父类的名称
+
+super()是一个特殊函数，帮助Python将父类和子类关联起来，。这行代码让Python调用ElectricCar的父类的方法__init__()，父类也称为超类（superclass），名称super因此而得名。
+
+
+重写父类的方法：可在子类中定义一个这样的方法，即它与要重写的父类方法同名。这样，Python将不会考虑这个父类方法，而只关注你在子类中定义的相应方法。（与c++一致）
+
+将实例用作属性：
+class Battery():
+	"""一次模拟电动汽车电瓶的简单尝试"""
+	def __init__(self, battery_size=70):
+		"""初始化电瓶的属性"""
+		self.battery_size = battery_size
+
+	def describe_battery(self):
+		"""打印一条描述电瓶容量的消息"""
+		print("This car has a " + str(self.battery_size) + "-kWh battery.")
+class ElectricCar(Car):
+	def __init__(self, make, model, year):
+		self.battery = Battery()
+my_tesla = ElectricCar('tesla', 'model s', 2016)
+my_tesla.battery.describe_battery()
+
+定义了一个名为Battery的新类，它没有继承任何类。(不是从car类继承下来的)
+这行代码让Python创建一个新的Battery实例，并将该实例存储在属性self.battery中。
+
+
+导入类：与函数导入差不多：
+from car import Car  #car是一个模块car.py  Car是car.py文件里面的类名
+
+my_new_car = Car('audi', 'a4', 2016)
+print(my_new_car.get_descriptive_name())
+
+my_new_car.odometer_reading = 23
+my_new_car.read_odometer()
+
+############################################
+self.battery = Battery()
+现在self.battery就相当于Battery()这个类
+############################################
+
+可根据需要在一个模块中存储任意数量的类(类似函数)：from car import ElectricCar
+可根据需要在程序文件中导入任意数量的类：from car import Car, ElectricCar
+你还可以导入整个模块，再使用句点表示法访问需要的类：
+import car
+my_beetle = car.Car('volkswagen', 'beetle', 2016)
+
+使用module_name.class_name语法来访问类
+
+
+Python 标准库：。可使用标准库中的任何函数和类，为此只需在程序开头包含一条简单的import语句
+
+要创建字典并记录其中的键—值对的添加顺序，可使用模块collections中的OrderedDict类。
+from collections import OrderedDict
+
+favorite_languages = OrderedDict()
+
+favorite_languages['jen'] = 'python'
+favorite_languages['sarah'] = 'c'
+调用OrderedDict()来创建一个空的有序字典，并将其存储在favorite_languages中
+
+
+
+文件：
+
+
+1.英文路径。2.路径寻找的时候是\\而不是\
+
+
+
+函数open()，打开文件，这样才能访问它。
+函数open()接受一个参数：要打开的文件的名称。Python在当前执行的文件所在的目录中查找指定的文件
+函数open()返回一个表示文件的对象
+
+关键字with在不再需要访问文件后将其关闭，让Python负责妥善地打开和关闭文件
+read()到达文件末尾时返回一个空字符串，而将这个空字符串显示出来时就是一个空行。要删除多出来的空行，可在print语句中使用rstrip()
+contents = file_object.read()
+print(contents.rstrip())
+
+要让Python打开不与程序文件位于同一个目录中的文件，需要提供文件路径，它让Python到系统的特定位置去查找。
+相对文件路径让Python到指定的位置去查找，而该位置是相对于当前运行的程序所在目录的。
+
+with open('text_files\\filename.txt') as file_object:
+#text_files是当前py文件所在文件夹下的子文件夹
+
+绝对文件路径：
+file_path = 'C:\\Users\\ehmatthes\\other_files\\text_files\\filename.txt'
+with open(file_path) as file_object:
+
+要以每次一行的方式检查文件：
+filename = 'pi_digits.txt'
+with open(filename) as file_object:
+	for line in file_object:
+		print(line)
+调用open()后，将一个表示文件及其内容的对象存储到了变量file_object中
+
+
+使用关键字with时，open()返回的文件对象只在with代码块内可用
+with open(filename) as file_object:
+	lines = file_object.readlines()   
+#方法readlines()从文件中读取每一行，并将其存储在一个列表中
+for line in lines:
+	print(line.rstrip())
+
+
+写入空文件:
+filename = 'programming.txt'
+with open(filename, 'w') as file_object:
+	file_object.write("I love programming.")
+读取模式（'r'）、写入模式（'w'）、附加模式（'a'）或让你能够读取和写入文件的模式（'r+'）。如果你省略了模式实参，Python将以默认的只读模式打开文件
+
+如果指定的文件已经存在，Python将在返回文件对象前清空该文件
+
+Python只能将字符串写入文本文件。要将数值数据存储到文本文件中，必须先使用函数str()将其转换为字符串格式。
+
+
+如果你要给文件添加内容，而不是覆盖原有的内容，可以附加模式打开文件:
+以附加模式打开文件时，Python不会在返回文件对象前清空文件，而你写入到文件的行都将添加到文件末尾
+with open(filename, 'a') as file_object:
+
+异常：Python使用被称为异常的特殊对象来管理程序执行期间发生的错误
+异常是使用try-except代码块处理的。
+try:
+	print(5/0)
+except ZeroDivisionError:
+	print("You can't divide by zero!")
+
+如果try代码块中的代码运行起来没有问题，Python将跳过except代码块；如果try代码块中的代码导致了错误，Python将查找这样的except代码块
+
+如果程序能够妥善地处理无效输入，就能再提示用户提供有效输入，而不至于崩溃。
+依赖于try代码块成功执行的代码都应放到else代码块中
+try:
+answer = int(first_number) / int(second_number)
+except ZeroDivisionError:
+	print("You can't divide by 0!")
+else:
+	print(answer)
+只有可能引发异常的代码才需要放在try语句中。有时候，有一些仅在try代码块成功执行时才需要运行的代码；这些代码应放在else代码块
+
+
+
+
+
+FileNotFoundError 异常：
+你要查找的文件可能在其他地方、文件名可能不正确或者这个文件根本就不存在。对于所有这些情形，都可使用try-except代码块以直观的方式进行处理。
+filename = 'alice.txt'
+try:v
+	with open(filename) as f_obj:
+		contents = f_obj.read()
+except FileNotFoundError:
+	msg = "Sorry, the file " + filename + " does not exist."
+	print(msg)
+
+方法split()，它根据一个字符串创建一个单词列表
+
+title = "Alice in Wonderland"
+title.split()
+#下面是title.split()的结果
+['Alice', 'in', 'Wonderland']
+
+方法split()以空格为分隔符将字符串分拆成多个部分，并将这些部分都存储到一个列表中。
+
+Python有一个pass语句，可在代码块中使用它来让Python什么都不要做
+except FileNotFoundError:
+	pass
+
+
+存储数据：一种简单的方式是使用模块json来存储数据
+JSON（JavaScript Object Notation）格式最初是为JavaScript开发的，但随后成了一种常见格式，被包括Python在内的众多语言采用。
+
+函数json.dump()接受两个实参：要存储的数据以及可用于存储数据的文件对象
+import json
+numbers = [2, 3, 5, 7, 11, 13]
+filename = 'numbers.json'
+with open(filename, 'w') as f_obj:
+	json.dump(numbers, f_obj)
+
+我们使用函数json.dump()将数字列表存储到文件numbers.json中
+
+import json
+filename = 'numbers.json'
+with open(filename) as f_obj:
+	numbers = json.load(f_obj)
+print(numbers)
+
+
+
+自动测试（代码）函数:
+Python标准库中的模块unittest提供了代码测试工具
+单元测试用于核实函数的某个方面没有问题；测试用例是一组单元测试
+全覆盖式测试用例包含一整套单元测试，涵盖了各种可能的函数使用方式
+
+要为函数编写测试用例，可先导入模块unittest以及要测试的函数，再创建一个继承unittest.TestCase的类，并编写一系列方法对函数行为的不同方面进行测试。
+
+import unittest
+from name_function import get_formatted_name
+class NamesTestCase(unittest.TestCase):   #定义一个类
+	"""测试name_function.py"""
+	def test_first_last_name(self):   #可以定义多个测试方法
+		"""能够正确地处理像Janis Joplin这样的姓名吗？"""
+		formatted_name = get_formatted_name('janis', 'joplin')
+		self.assertEqual(formatted_name, 'Janis Joplin')
+unittest.main()
+
+unittest类最有用的功能之一：一个断言方法。断言方法用来核实得到的结果是否与期望的结果一致
+代码行self.assertEqual(formatted_name, 'Janis Joplin')的意思是说：“将formatted_name的值同字符串'Janis Joplin'进行比较，如果它们相等，就万事大吉，如果它们不相等，跟我说一声！
+
+方法名必须以test_打头，这样它才会在我们运行test_name_function.py时自动运行
+
+代码行unittest.main()让Python运行这个文件中的测试
+OK表明该测试用例中的所有单元测试都通过了。
+
+测试类：P193页 六个方法
+只能在继承unittest.TestCase的类中使用这些方法，
+
+class AnonymousSurvey():
+	"""收集匿名调查问卷的答案"""
+	def __init__(self, question):
+	"""存储一个问题，并为存储答案做准备"""
+		self.question = question
+		self.responses = []
+	def show_question(self):
+		"""显示调查问卷"""
+		print(question)
+
+from survey import AnonymousSurvey
+#定义一个问题，并创建一个表示调查的AnonymousSurvey对象
+question = "What language did you first learn to speak?"
+my_survey = AnonymousSurvey(question)
+#显示问题并存储答案
+my_survey.show_question()
+
+测试AnonymousSurvey 类：
+import unittest
+from survey import AnonymousSurvey
+class TestAnonmyousSurvey(unittest.TestCase):
+	"""针对AnonymousSurvey类的测试"""
+	def test_store_single_response(self):
+		"""测试单个答案会被妥善地存储"""
+		question = "What language did you first learn to speak?"
+		my_survey = AnonymousSurvey(question)
+		my_survey.store_response('English')
+		self.assertIn('English', my_survey.responses)
+	def test_store_three_responses(self):
+		"""测试三个答案会被妥善地存储"""
+		question = "What language did you first learn to speak?"
+		my_survey = AnonymousSurvey(question)
+		responses = ['English', 'Spanish', 'Mandarin']
+		for response in responses:
+			my_survey.store_response(response)
+		for response in responses:
+			self.assertIn(response, my_survey.responses)		
+unittest.main()
+
+unittest.TestCase类包含方法setUp()，让我们只需创建这些对象一次，并在每个测试方法中使用它们。
+如果你在TestCase类中包含了方法setUp()，Python将先运行它，再运行各个以test_打头的方法
+
+def setUp(self):
+	"""
+	创建一个调查对象和一组答案，供使用的测试方法使用
+	"""
+	question = "What language did you first learn to speak?"
+#1	self.my_survey = AnonymousSurvey(question)
+#2	self.responses = ['English', 'Spanish', 'Mandarin']
+#用在了单个答案中
+self.responses[0]
+方法setUp()做了两件事情：创建一个调查对象（见1）；创建一个答案列表（见2）
+#不需要每一次都创建一个对象
+
+
+
+
+
+
+
+游戏项目：
+
+#coding=gbk
+import sys
+import pygame
+
+def run_game():
+	#c初始化游戏并创建一个屏幕对象
+	pygame.init()
+	screen=pygame.display.set_mode((1200,800))
+	pygame.display.set_caption("Alien Invasion")
+	
+	#开始游戏的主循环
+	while True:
+		#监视键盘和鼠标事件
+		for event in pygame.event.get():
+			if event.type==pygame.QUIT:
+				sys.exit()
+		
+		#让最近绘制的屏幕可见
+		pygame.display.flip()
+
+run_game()
+
+pygame.init()初始化背景设置，
+对象screen是一个surface。 display.set_mode()返回的surface表示整个游戏窗口
+pygame.display.set_caption（“”）  创建标题栏题目
+
+访问Pygame检测到的事件，我们使用方法pygame.event.get()。所有键盘和鼠标事件都将促使for循环运行
+玩家单击游戏窗口的关闭按钮时，将检测到pygame.QUIT事件
+
+pygame.display.flip()，命令Pygame让最近绘制的屏幕可见
+
+settings的模块，其中包含一个名为Settings的类，用于将所有设置存储在一个地方，以免在代码中到处添加设置。
+
+
+在游戏中几乎可以使用任何类型的图像文件，但使用位图（.bmp）文件最为简单。Pygame默认加载位图。
+
+我们调用了pygame.image.load()，这个函数返回一个表示飞船的surface（外表）
+加载图像后，我们使用get_rect()获取相应surface的属性rect
+Pygame让你能够像处理矩形（rect对象）一样处理游戏元素
+
+处理rect对象时，可使用矩形四角和中心的x和y坐标。可通过设置这些值来指定矩形的位置。
+
+要将游戏元素居中，可设置相应rect对象的属性center、centerx或centery。要让游戏元素与屏幕边缘对齐，可使用属性top、bottom、left或right；要调整游戏元素的水平或垂直位置，可使用属性x和y，它们分别是相应矩形左上角的x和y坐标。
+
+在Pygame中，原点(0, 0)位于屏幕左上角，向右下方移动时，坐标值将增大；（与opgl相反）
+
+方法blitme()，它根据self.rect指定的位置将图像绘制到屏幕上。
+
+def blitme(self):
+"""在指定位置绘制飞船"""
+self.screen.blit(self.image, self.rect)
+screen中的方法blit能够将self的图像和外形（矩形）显示在屏幕上
+
+
+大型项目中，经常需要在添加新代码前重构既有代码。重构旨在简化既有代码的结构，使其更容易扩展
+在主程序文件中，不再需要直接导入sys，因为当前只在模块game_functions中使用了它
+
+控制屏幕图像的移动：
+每当用户按键时，都将在Pygame中注册一个事件。事件都是通过方法pygame.event.get()获取的
+
+
+如果按下的是右箭头键，我们就增大飞船的rect.centerx值
+在函数check_events()中包含形参ship，因为玩家按右箭头键时，需要将飞船向右移动
+
+读取属性event.key，以检查按键（这种方式是需要不断按图像才能移动）
+
+每次按键都被注册为一个KEYDOWN事件。（即按下按键）
+我们将让游戏检测pygame.KEYUP事件，以便玩家松开右箭头键时我们能够知道这一点
+
+
+
+在方法__init__()中，我们添加了标志self.moving_left；在方法update()中，我们添加了一个if代码块而不是elif代码块，这样如果玩家同时按下了左右箭头键，将先增大飞船的rect.centerx值，再降低这个值，即飞船的位置保持不变。如果使用一个elif代码块来处理向左移动的情况，右箭头键将始终处于优先地位。
+
+
+###elif 与 if 的区别###   重点！！！！！！
+
+
+如果因玩家按下K_LEFT键而触发了KEYDOWN事件，我们就将moving_left设置为True；如果因玩家松开K_LEFT而触发了KEYUP事件，我们就将moving_left设置为False。这里之所以可以使用elif代码块，是因为每个事件都只与一个键相关联；如果玩家同时按下了左右箭头键，将检测到两个不同的事件。
+
+
+在Settings类中添加属性ship_speed_factor，用于控制飞船的速度
+rect的centerx等属性只能存储整数值，因此我们需要对Ship类做些修改：
+
+self.ai_settings = ai_settings
+self.centerx = float(self.rect.centerx)
+self.centerx += self.ai_settings.ship_speed_factor
+
+#根据self.center更新rect对象.   最后再需要给self.rect.centerx赋值
+#self.rect = self.image.get_rect()
+self.rect.centerx = self.center
+
+
+__init__()的形参列表中添加了ai_settings，让飞船能够获取其速度设置。
+需要将位置存储在一个能够存储小数值的变量中
+为准确地存储飞船的位置，我们定义了一个可存储小数值的新属性self.center。我们使用函数float()将self.rect.centerx的值转换为小数，并将结果存储到self.center中。
+
+对于rect的参数设置： left,top,right,bottom
+
+Bullet类继承了我们从模块pygame.sprite中导入的Sprite类。通过使用精灵，可将游戏中相关的元素编组，进而同时操作编组中的所有元素。为创建子弹实例，需要向__init__()传递ai_settings、screen和ship实例，还调用了super()来继承Sprite。
+
+我们创建了子弹的属性rect。子弹并非基于图像的，因此我们必须使用pygame.Rect()类从空白开始创建一个矩形。创建这个类的实例时，必须提供矩形左上角的x坐标和y坐标，还有矩形的宽度和高度
+
+需要绘制子弹时，我们调用draw_bullet()。函数draw.rect()使用存储在self.color中的颜色填充表示子弹的rect占据的屏幕部分
+
+
+
+gf.check_events(ai_settings, screen, ship, bullets)
+ship.update()
+bullets.update()
+gf.update_screen(ai_settings, screen, ship, bullets)
+
+
+玩家每次按空格键时都射出一发子弹。
+在alien_invasion.py中创建一个编组（group），用于存储所有有效的子弹，以便能够管理发射出去的所有子弹
+编组将是pygame.sprite.Group类的一个实例；pygame.sprite.Group类类似于列表，但提供了有助于开发游戏的额外功能。
+
+我们导入了pygame.sprite中的Group类。在处，我们创建了一个Group实例，并将其命名为bullets。这个编组是在while循环外面创建的，这样就无需每次运行该循环时都创建一个新的子弹编组。
+
+如果在循环内部创建这样的编组，游戏运行时将创建数千个子弹编组，导致游戏慢得像蜗牛。如果游戏停滞不前，请仔细查看主while循环中发生的情况。
+
+在check_events()中，需要在玩家按空格键时处理bullets；而在update_screen()中，需要更新要绘制到屏幕上的bullets。当你对编组调用update()时，编组将自动对其中的每个精灵调用update()，因此代码行bullets.update()将为编组bullets中的每颗子弹调用bullet.update()。
+
+def check_keydown_events(event, ai_settings, screen, ship, bullets):
+	--snip--
+	elif event.key == pygame.K_SPACE:
+		# 创建一颗子弹，并将其加入到编组bullets中
+		new_bullet = Bullet(ai_settings, screen, ship)
+		bullets.add(new_bullet)
+
+编组bulltes传递给了check_keydown_events()，并使用方法add()将其加入到编组bullets中
+玩家按空格键时，创建一颗新子弹（需要不停的按下空格）
+
+
+def update_screen(ai_settings, screen, ship, bullets):
+	--snip--
+	# 在飞船和外星人后面重绘所有子弹
+	for bullet in bullets.sprites():
+		bullet.draw_bullet()
+
+方法bullets.sprites()返回一个列表，其中包含编组bullets中的所有精灵，遍历编组bullets中的精灵，并对每个精灵都调用draw_bullet()
+
+
+删除已消失的子弹：表示子弹的rect的bottom属性为零，它表明子弹已穿过屏幕顶端：
+# 删除已消失的子弹
+for bullet in bullets.copy():
+	if bullet.rect.bottom <= 0:
+		bullets.remove(bullet)
+	print(len(bullets))
+
+在for循环中，不应从列表或编组中删除条目，因此必须遍历编组的副本。我们使用了方法copy()来设置for循环（见），这让我们能够在循环中修改bullets。
+
+
+
+我们将每个外星人的左边距都设置为外星人的宽度，并将上边距设置为外星人的高
+# 每个外星人最初都在屏幕左上角附近
+self.rect.x = self.rect.width
+self.rect.y = self.rect.height
+
+在进入主while循环前创建了一个Alien实例
+
+要绘制一群外星人，需要确定一行能容纳多少个外星人以及要绘制多少行外星人。我们将首先计算外星人之间的水平间距，并创建一行外星人，再确定可用的垂直空间，并创建整群外星人
+
+对编组调用draw()时，Pygame自动绘制编组的每个元素，绘制位置由元素的属性rect决定。在这里，aliens.draw(screen)在屏幕上绘制编组中的每个外星人。
+
+int（）方法向下圆整
+每个外星人都往右推一个外星人的宽度。接下来，我们将外星人宽度乘以2，得到每个外星人占据的空间（其中包括其右边的空白区域）
+alien.x = alien_width + 2 * alien_width * alien_number
+
+我们在更新子弹后再更新外星人的位置，因为稍后要检查是否有子弹撞到了外星人。
+
+子弹击中外星人时，我们要马上知道，以便碰撞发生后让外星人立即消失。为此，我们将在更新子弹的位置后立即检测碰撞。
+
+
+方法sprite.groupcollide()将每颗子弹的rect同每个外星人的rect进行比较，并返回一个字典，其中包含发生了碰撞的子弹和外星人
+在这个字典中，每个键都是一颗子弹，而相应的值都是被击中的外星人（第14章实现记分系统时，也会用到这个字典）
+
+
+collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+这行代码遍历编组bullets中的每颗子弹，再遍历编组aliens中的每个外星人。每当有子弹和外星人的rect重叠时，groupcollide()就在它返回的字典中添加一个键值对。两个实参True告诉Pygame删除发生碰撞的子弹和外星人。（要模拟能够穿行到屏幕顶端的高能子弹——消灭它击中的每个外星人，可将第一个布尔实参设置为False，并让第二个布尔实参为True。这样被击中的外星人将消失，但所有的子弹都始终有效，直到抵达屏幕顶端后消失。）
+
+使用方法empty()删除编组中余下的所有精灵，从而删除现有的所有子弹
+
+
+if pygame.sprite.spritecollideany(ship, aliens):
+方法spritecollideany()接受两个实参：一个精灵和一个编组。它检查编组是否有成员与精灵发生了碰撞，并在找到与精灵发生了碰撞的成员后就停止遍历编组
+如果没有发生碰撞，spritecollideany()将返回None
+
+
+通过跟踪游戏的统计信息来记录飞船被撞了多少次：
+在这个游戏运行期间，我们只创建一个GameStats实例，但每当玩家开始新游戏时，需要重置一些统计信息。为此，我们在方法reset_stats()中初始化大部分统计信息，而不是在__init__()中直接初始化它们。我们在__init__()中调用这个方法，这样创建GameStats实例时将妥善地设置这些统计信息
+
+
+创建按钮：
+import pygame.font
+创建一个Button类：
+导入了模块pygame.font，它让Pygame能够将文本渲染到屏幕上。方法__init__()接受参数self，对象ai_settings和screen，以及msg，其中msg是要在按钮中显示的文本
+self.font = pygame.font.SysFont(None, 48)
+我们指定使用什么字体来渲染文本
+Pygame通过将你要显示的字符串渲染为图像来处理文本。调用prep_msg()来处理这样的渲染。
+
+调用font.render()将存储在msg中的文本转换为图像，然后将该图像存储在msg_image中
+self.msg_image = self.font.render(msg, True, self.text_color,self.button_color)
+
+其中True指定开启还是关闭反锯齿功能（反锯齿让文本的边缘更平滑）
+调用screen.fill()来绘制表示按钮的矩形，再调用screen.blit()，并向它传递一幅图像以及与该图像相关联的rect对象，从而在屏幕上绘制文本图像
+
+
+无论玩家单击屏幕的什么地方，Pygame都将检测到一个MOUSEBUTTONDOWN事件
+游戏在玩家用鼠标单击Play按钮时作出响应。为此，我们使用了pygame.mouse.get_pos()，它返回一个元组，其中包含玩家单击时鼠标的x和y坐标
+mouse_x, mouse_y
+
+
+通过向set_visible()传递False，让Pygame在光标位于游戏窗口内时将其隐藏起来。
+pygame.mouse.set_visible(False)
+
+右边缘与屏幕右边缘相距20像素
+self.score_rect.right = self.screen_rect.right - 20
+
+在check_bullet_alien_collisions()中，与外星人碰撞的子弹都是字典collisions中的一个键；而与每颗子弹相关的值都是一个列表，其中包含该子弹撞到的外星人。我们遍历字典collisions，确保将消灭的每个外星人的点数都记入得分：
+for aliens in collisions.values():
+	stats.score += ai_settings.alien_points * len(aliens)
+每个值都是一个列表，包含被同一颗子弹击中的所有外星人
+
+
+函数round()通常让小数精确到小数点后多少位，其中小数位数是由第二个实参指定的。然而，如果将第二个实参指定为负数，round()将圆整到最近的10、100、1000等整数倍。
+Python将stats.score的值圆整到最近的10的整数倍，并将结果存储到rounded_score中
+round()总是返回一个小数值
+
+rounded_score = int(round(self.stats.score, -1))
+
+
+使用了一个字符串格式设置指令，它让Python将数值转换为字符串时在其中插入逗号，例如，输出1,000,000而不是1000000
+score_str = "{:,}".format(rounded_score)
+
+
+
+
+
+数据可视化：
+使用matplotlib工具。matplotlib.pyplot
+只需向matplotlib提供如下数字，matplotlib就能完成其他的工作
+plt.plot(squares,linewidth=5)
+plt.show()
+函数plot()尝试根据这些数字绘制出有意义的图形
+plt.show()打开matplotlib查看器，并显示绘制的图形，
+
+plt.tick_params(axis='both', labelsize=14)
+函数tick_params()设置刻度的样式，其中指定的实参将影响x轴和y轴上的刻度（axes='both'）
+
+当你向plot()提供一系列数字时，它假设第一个数据点对应的x坐标值为0。但我们的第一个点对应的x值为1。为改变这种默认行为，我们可以给plot()同时提供输入值和输出值。
+
+
+绘制散点图并设置各个数据点的样式：
+要绘制单个点，可使用函数scatter()，并向它传递一对x和y坐标，它将在指定位置绘制一个点：
+plt.scatter(x_values,y_values,s=5)
+
+
+matplotlib允许你给散点图中的各个点指定颜色。默认为蓝色点和黑色轮廓，在散点图包含的数据点不多时效果很好。但绘制很多点时，黑色轮廓可能会粘连在一起。要删除数据点的轮廓，可在调用scatter()时传递实参edgecolor='none'：
+
+要修改数据点的颜色，可向scatter()传递参数c，并将其设置为要使用的颜色的名称
+plt.scatter(x_values, y_values, c='red', edgecolor='none', s=40)
+要指定自定义颜色，可传递参数c，并将其设置为一个元组，其中包含三个0~1之间的小数值，它们分别表示红色、绿色和蓝色分量
+
+颜色映射：
+颜色映射（colormap）是一系列颜色，它们从起始颜色渐变到结束颜色。
+模块pyplot内置了一组颜色映射。要使用这些颜色映射，你需要告诉pyplot该如何设置数据集中每个点的颜色。演示了如何根据每个点的y值来设置其颜色：
+
+plt.scatter(x_values, y_values, c=y_values, cmap=plt.cm.Blues,edgecolor='none', s=40)
+将参数c设置成了一个y值列表，并使用参数cmap告诉pyplot使用哪个颜色映射
+传递实参edgecolor=none以删除每个点周围的轮廓
+
+
+
+程序自动将图表保存到文件中，可将对plt.show()的调用替换为对plt.savefig()的调用：
+plt.savefig('squares_plot.png', bbox_inches='tight')
+
+第一个实参指定要以什么样的文件名保存图表。第二个实参指定将图表多余的空白区域裁剪掉，省略实参保留空白区域
+
+
+
+
+随机漫步：
+随机漫步是这样行走得到的路径：每次行走都完全是随机的，没有明确的方向，结果是由一系列随机决时
+策决定的
+
+为做出随机决策，我们将所有可能的选择都存储在一个列表中，并在每次做决策时都使用choice()来决定使用哪种选择
+创建了两个用于存储x和y值的列表，并让每次漫步都从点(0, 0)出发。
+
+使用choice([1, -1])给x_direction选择一个值，结果要么是表示向右走的1，要么是表示向左走的-1
+接下来，choice([0, 1, 2, 3, 4])随机地选择一个0~4之间的整数，告诉Python 沿指定的方向走多远（x_distance）。（通过包含0，我们不仅能够沿两个轴移动，还能够沿y轴移动。）
+
+为修改坐标轴，使用了函数plt.axes()来将每条坐标轴的可见性都设置为False
+plt.axes().get_xaxis().set_visible(False)
+
+调整尺寸以适合屏幕:
+函数figure()用于指定图表的宽度、高度、分辨率和背景色。你需要给形参figsize指定一个元组，向matplotlib指出绘图窗口的尺寸，单位为英寸
+
+你知道自己的系统的分辨率，可使用形参dpi向figure()传递该分辨率，以有效地利用可用的屏幕空间，
+plt.figure(dpi=128, figsize=(10, 6))
+
+
+使用Python可视化包Pygal来生成可缩放的矢量图形文件。对于需要在尺寸不同的屏幕上显示的图表，这很有用，因为它们将自动缩放，以适合观看者的屏幕。
+使用Pygal 模拟掷骰子:
+方法roll()使用函数randint()来返回一个1和面数之间的随机数
+
+def roll(self):
+""""返回一个位于1和骰子面数之间的随机值"""
+	return randint(1, self.num_sides)
+
+这个函数可能返回起始值1、终止值num_sides或这两个值之间的任何整数。
+
+创建了空列表frequencies，用于存储每种点数出现的次数
+我们遍历可能的点数（这里为1~6），计算每种点数在results中出现了多少次
+
+frequencies = []
+for value in range(1, die.num_sides+1):
+	frequency = results.count(value)
+	frequencies.append(frequency)
+
+
+为创建条形图，我们创建了一个pygal.Bar()实例，并将其存储在hist中。
+hist = pygal.Bar()
+使用add()将一系列值添加到图表中（向它传递要给添加的值指定的标签，还有一个列表，其中包含将出现在图表中的值）。
+hist.add('D6', frequencies)
+hist.render_to_file('die_visual.svg')
+将这个图表渲染为一个SVG文件，这种文件的扩展名必须为.svg。
+
+
+
+
+
+
+
+
+
+使用Python模块csv来处理以CSV（逗号分隔的值）格式存储的数据，
+import csv
+filename = 'sitka_weather_07-2014.csv'
+with open(filename) as f:
+	reader = csv.reader(f)
+	header_row = next(reader)
+	print(header_row)
+我们调用csv.reader()，并将前面存储的文件对象作为实参传递给它，从而创建一个与该文件相关联的阅读器（reader）对象
+模块csv包含函数next()，调用它并将阅读器对象传递给它时，它将返回文件中的下一行。
+在前面的代码中，我们只调用了next()一次，因此得到的是文件的第一行，其中包含文件头
+
+reader处理文件中以逗号分隔的第一行数据，并将每项数据都作为一个元素存储在列表中。
+
+
+for index, column_header in enumerate(header_row):
+	print(index, column_header)
+
+我们对列表调用了enumerate()来获取每个元素的索引及其值
+
+日期和最高气温分别存储在第0列和第1列，我们将处理每行数据，并提取其中索引为0和1的值。
+
+import csv
+#从文件中获取最高气温
+filename = 'sitka_weather_07-2014.csv'
+with open(filename) as f:
+	reader = csv.reader(f）
+	header_row = next(reader）
+	highs = []
+	for row in reader:
+		highs.append(row[1])
+	print(highs)
+
+
+前面的数字是行号，从1开始，可以用reader.line_num获取
+要注意的是，reader只能被遍历一次。由于reader是可迭代对象，可以使用next方法一次获取一行。
+
+
+使用int()将这些字符串转换为数字，让matplotlib能够读取它们
+
+# 根据数据绘制图形
+fig = plt.figure(dpi=128, figsize=(10, 6))
+plt.plot(highs, c='red')
+
+模块datetime:
+为创建一个表示2014年7月1日的对象，可使用模块datetime中的方法strptime()。
+from datetime import datetime
+first_date = datetime.strptime('2014-7-1'（row[0]）, '%Y-%m-%d')
+结果：2014-07-01
+第二个实参告诉Python如何设置日期的格式。
+'%Y-'让Python将字符串中第一个连字符前面的部分视为四位的年份；'%m-'让Python将第二个连字符前面的部分视为表示月份的数字；而'%d'让Python将字符串的最后一部分视为月份中的一天（1~31）。
+
+调用了fig.autofmt_xdate()来绘制斜的日期标签，以免它们彼此重叠
+使用方法fill_between()，它接受一个x值系列和两个y值系列，并填充两个y值系列之间的空间。
+plt.plot(dates, highs, c='red', alpha=0.5)
+plt.plot(dates, lows, c='blue', alpha=0.5)
+plt.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
+
+实参alpha指定颜色的透明度。Alpha值为0表示完全透明，1（默认设置）表示完全不透明
+
+
+分析数据异常：
+Python无法处理其中一天的最高气温，因为它无法将空字符串（' '）转换为整数。对分析数据集时可能出现的异常进行处理
+for row in reader:
+	try:
+		current_date = datetime.strptime(row[0], "%Y-%m-%d")
+		high = int(row[1])
+		low = int(row[3]）
+	except ValueError:
+		print(current_date, 'missing data')
+	else:
+		dates.append(current_date)
+		highs.append(high)
+		lows.append(low)
+
+在有些情况下，需要使用continue来跳过一些数据，或者使用remove()或del将已提取的数据删除。
+
+
+
+JSON格式的数据集及JSON文件处理：使用json模块处理
+json文件实际上就是一个很长的Python列表
+import json
+# 将数据加载到一个列表中
+filename = 'population_data.json'
+with open(filename) as f:
+	pop_data = json.load(f)
+# 打印每个国家2010年的人口数量
+for pop_dict in pop_data:
+	if pop_dict['Year'] == '2010':
+		country_name = pop_dict['Country Name']
+		population = pop_dict['Value']
+		print(country_name + ": " + population)
+
+函数json.load()将数据转换为Python能够处理的格式，这里是一个列表。
+
+population = int(float(pop_dict['Value']))
+list()就和int()、str()等等一样，可以进行强制类型转换
+
+
+Pygal中的地图制作工具要求数据为特定的格式：用国别码表示国家，以及用数字表示人口数量。
+population_data.json中包含的是三个字母的国别码，但Pygal使用两个字母的国别码
+
+Pygal使用的国别码存储在模块i18n中。字典COUNTRIES包含的键和值分别为两个字母的国别码和国家名
+from pygal.i18n import COUNTRIES
+for country_code in sorted(COUNTRIES.keys()):
+	print(country_code, COUNTRIES[country_code])
+
+
+Pygal提供了图表类型Worldmap，可帮助你制作呈现各国数据的世界地图
+import pygal
+wm = pygal.Worldmap()
+wm.title = 'North, Central, and South America’
+
+wm.add('North America', ['ca', 'mx', 'us'])
+wm.add('Central America', ['bz', 'cr', 'gt', 'hn', 'ni', 'pa', 'sv'])
+wm.add('South America', ['ar', 'bo', 'br', 'cl', 'co', 'ec', 'gf',
+'gy', 'pe', 'py', 'sr', 'uy', 've'])
+
+wm.render_to_file('americas.svg')
+
+方法add()它接受一个标签和一个列表，其中后者包含我们要突出的国家的国别码
+每次调用add()都将为指定的国家(自己提供的所有国家)选择一种新颜色，并在图表左边显示该颜色和指定的标签。
+
+
+在世界地图上呈现数字数据：
+import pygal
+
+wm = pygal.Worldmap()
+wm.title = 'Populations of Countries in North America'
+wm.add('North America', {'ca': 34126000, 'us': 309349000, 'mx': 113423000})
+
+wm.render_to_file('na_populations.svg')
+
+使用了方法add()，但这次通过第二个实参传递了一个字典而不是列表
+Pygal根据这些数字自动给不同国家着以深浅不一的颜色（人口最少的国家颜色最浅，人口最多的国家颜色最深）
+
+
+from pygal.style import RotateStyle
+Pygal样式存储在模块style中，我们从这个模块中导入了样式RotateStyle.
+
+
+创建这个类的实例时，需要提供一个实参——十六进制的RGB颜色
+wm_style = RotateStyle('#336699')
+十六进制格式的RGB颜色是一个以井号（#）打头的字符串，后面跟着6个字符，其中前两个字符表示红色分量，接下来的两个表示绿色分量，最后两个表示蓝色分量。
+取值范围为00（没有相应的颜色）~FF（包含最多的相应颜色）
+
+RotateStyle返回一个样式对象，我们将其存储在wm_style中。为使用这个样式对象，我们在创建Worldmap实例时以关键字实参的方式传递它
+wm = pygal.Worldmap(style=wm_style)
+
+
+使用LightColorizedStyle加亮了地图的颜色。这个类修改整个图表的主题，包括背景色、标签以及各个国家的颜色。
+from pygal.style import LightColorizedStyle, RotateStyle
+wm_style = LightColorizedStyle
+使用这个类时，你不能直接控制使用的颜色，Pygal将选择默认的基色。要设置颜色，可使用RotateStyle，并将LightColorizedStyle作为基本样式
+
+再使用RotateStyle创建一种样式，并传入另一个实参base_style：
+wm_style = RotateStyle('#336699', base_style=LightColorizedStyle)
+
+
+
+
+
+
+
+
+
+
+
+
+WEB  API:
+GitHub的API让你能够通过API调用来请求各种信息
+https://api.github.com/search/repositories?q=language:python&sort=stars
+第一部分（https://api.github.com/）将请求发送到GitHub网站中响应API调用的部分；接下来的一部分（search/repositories）让API搜索GitHub上的所有仓库。
+repositories后面的问号指出我们要传递一个实参。q表示查询，而等号让我们能够开始指定查询
+通过使用language:python，我们指出只想获取主要语言为Python的仓库的信息。最后一部分（&sort=stars）指定将项目按其获得的星级进行排序。
+
+requests包让Python程序能够轻松地向网站请求信息以及检查返回的响应
+
+
+
+我们调用get()并将URL传递给它
+响应对象包含一个名为status_code的属性，它让我们知道请求是否成功了（状态码200表示请求成功）
+使用方法json()将这些信息转换为一个Python字典
+
+url = 'https://api.github.com/search/repositories?q=language:python&sort=stars'
+r = requests.get(url)
+print("Status code:", r.status_code)
+response_dict = r.json()
+print(response_dict.keys())
+
+大多数API都存在速率限制，即你在特定时间内可执行的请求数存在限制
+
+让标签绕x轴旋转45度（x_label_rotation=45），并隐藏了图例（show_legend=False），因为我们只在图表中绘制一个数据系列
+chart = pygal.Bar(style=my_style, x_label_rotation=45, show_legend=False)
+由于我们不需要给这个数据系列添加标签，因此添加数据时，将标签设置成了空字符串
+chart.add('', stars)
+
+
+Pygal类Config的实例，并将其命名为my_config。通过修改my_config属性，可定制图表的外观
+my_config = pygal.Config()
+my_config.show_y_guides = False
+show_y_guides设置为False，以隐藏图表中的水平线
+chart = pygal.Bar(my_config, style=my_style)
+将my_config作为第一个实参，从而通过一个实参传递了所有的配置设置
+
+
+在Pygal中，将鼠标指向条形将显示它表示的信息，这通常称为工具提示。
+
+调用add()时，我们传入了一个由表示条形的字典组成的列表（plot_dicts）
+chart.add('', plot_dicts)
+
+
+创建字典plot_dict。在这个字典中，我们使用键'value'存储了星数，并使用键'label'存储了项目描述
+plot_dict={'value': repo_dict['stargazers_count'],
+	'label': str(repo_dict['description']),}
+
+label后面要用字符串，repo_dict['description']需要用str进行修饰
+
+
+Pygal还允许你将图表中的每个条形用作网站的链接。为此，只需添加一行代码，在为每个项目创建的字典中，添加一个键为'xlink'的键—值对：
+plot_dict = {
+'value': repo_dict['stargazers_count'],
+'label': str(repo_dict['description']),
+'xlink': repo_dict['html_url'],
+}
+Pygal根据与键'xlink'相关联的URL将每个条形都转换为活跃的链接
+
+
+r = requests.get(url)
+#们将响应文本转换为一个Python列表
+submission_ids = r.json()
+
+我们在这个字典中存储了评论数。如果文章还没有评论，响应字典中将没有键'descendants'。不确定某个键是否包含在字典中时，可使用方法dict.get()，它在指定的键存在时返回与之相关联的值，并在指定的键不存在时返回你指定的值（这里是0）。
+'comments': response_dict.get('descendants', 0)
+
+
+我们要根据评论数对字典列表submission_dicts进行排序，为此，使用了模块operator中的函数itemgetter()。我们向这个函数传递了键'comments'，因此它将从这个列表的每个字典中提取与键'comments'相 关联的值。这样，函数sorted()将根据这种值对列表进行排序
+
+submission_dicts = sorted(submission_dicts, key=itemgetter('comments'),reverse=True)
+
+
+
+要使用Django，首先需要建立一个虚拟工作环境。虚拟环境是系统的一个位置，你可以在其中安装包，并将其与其他Python包隔离。将项目的库与其他项目分离是有益的，且为了在第20章将“学习笔记”部署到服务器，这也是必须的
+
+
+
+
+
+Jupyter Notebook：
+
+%run 后面跟上脚本所在地址。 这样做能够把脚本里面的函数直接加载进Jupyter Notebook中，从而在以后的程序中都可以用该脚本里面的函数
+
+%timeit 后面接一句话且只能是一句话，能够测试代码性能
+%%timeit 在这句话下面（另起一行了），可以放置多段代码
+
+%time 与 %timeit用法差不多，只不过后面的语句只执行一次
+区域化也一样： %%time 
+
+%lsmagic查询魔法命令
+%魔法命令？ 能够查询魔法命令的作用
+
+
+numpy.array 和list用法差不多，但是只能保存一种类型的数据（能够减少错误的发生）
+numpy.dtype  datatype缩写
+
+numpy.arange(15).reshape(3,5)   arange(15)是一维数组，reshape（3,5）是把一维数组变为3行5列的二维数组
+
+print(a[::-1])  #表示整个数组从后向前输出结果
+
+
+
+
+类的继承：class D（B,C）：    #B、C继承自A
+	python3中使用 新式类： 即先查找B、C，若它们中都没有所需要的元素，则再往上查找
+
+类属性（？？？？）：
+	class Foo(object):     #python运行起来后，会有一个默认的object类，object类是所有类					的最终点。 写上object就是新式类，python3推荐（默认继承这个				类）
+		#类属性
+		cc_pro = 10;
+
+		#类方法？
+		@classmethod
+		def c_met(cls):
+			pass
+
+
+
+dir(对象)：  看一个对象里面有哪些属性
+
+
+
+__getattr__(self,itme):   #对属性的查找(??????)
+
+
+
+
+
+
+
+正则表达式：
+1. re模块： re.match(正则表达式，要匹配的字符串)，返回是一个匹配对象(Match Object),返回None
+result.group()  #查看哪些部分匹配
+2.正则数量描述： 、
+	re.match("1[34567]","15")  #这样是能匹配的  []中若没有后面的东西，则不匹配
+	[a-z5-9],这是两个范围、
+
+3. re.match("\d*","a").group() 返回的是" "   因为"a" == """a".  ""表示没有数字
+字符串里面出现一个\,那么匹配的正则表达式中就要有两个\
+
+r表示原始字符串，即其本来如何就是如何，不会自动转义。   
+
+re.match(r"\\nabc",s)   表达式识别的就是\\nbac,而不是\nabc   
+
+4.：$匹配字符串结尾abc$。   在输入模式中， $是返回一行的末尾， ^是返回一行的头
+[1-9]\d?   \d?表示0-9这个数存在0个或1个   即表示1-99这些数  1 \d表示0个  11 ：：\d表示1个
+
+5：分组： re.match("<h1>（.*）</h1>",""<h1>哈哈哈</h1>)   .*能够匹配任何字符  .表示除/n以外
+（）是用来把里面的内容保存记录？？？？？
+
+group（1）  1表示正则表达式中第一组出现的（），即字符串中第一个分组
+	0则是整个匹配的东西
+
+6.：re.match("<(.+)><(.+)>.+</\2></\1>",""),  .+表示不管格式（应该是这样） 
+()表示取得<>中的内容并保存   \2表示取得第二个分组中的内容（引用值）
+
+7：(?P<name>) 给分组起别名    （？P=name） 引用别名为name分组匹配到的字符串
+8：sub（“第一个”“第二个”“第二个替换第一个”）
+9.："""xxx"""  认为是字符串
+
+10： split： 以某一特定字符分割字符串
+11 ：贪婪模式：正则表达式默认模式：<.+>   如果一行中<h><l></h>这样类似的. 那么在搜索中就会贪婪至最末尾,即.把h><l></h都给表示了
+
+ <.+？>  ：关闭贪婪模式
+
+12：re.sub(r"(http://.+?/).*", lambda x: x.group(1),s).   x就是一条url。
+x.group(1) == (http://.+?/)

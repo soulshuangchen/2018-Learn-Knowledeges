@@ -1,0 +1,21 @@
+最精简的1/sqrt()函数：
+
+float InvSqrt(float x)
+{
+    float xhalf = 0.5f*x;
+    int i = *(int*)&x; // get bits for floating VALUE 
+    i = 0x5f375a86（9df）- (i>>1); // gives initial guess y0
+    x = *(float*)&i; // convert bits BACK to float
+    x = x*(1.5f-xhalf*x*x); // Newton step, repeating increases accuracy
+    return x;
+}  
+
+牛顿迭代法
+
+
+unordered_map和map类似，都是存储的key-value的值，可以通过key快速索引到value。不同的是unordered_map不会根据key的大小进行排序，
+
+
+
+
+字符串变成数字、数字变成字符串
