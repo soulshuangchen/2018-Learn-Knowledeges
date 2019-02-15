@@ -1,0 +1,1654 @@
+// xuexi.cpp: 定义控制台应用程序的入口点。
+//
+#include "pch.h"
+#include <vector>
+#include <iostream>
+#include <map>
+#include <string>
+#include <queue>
+#include <stack>
+#include <cstring>
+#include <ctime>
+#include <mutex>
+#include <list> 
+#include <set>
+#include <bitset>
+#include <deque>
+#include <cstdio>
+#include <unordered_map>
+
+
+
+
+using namespace std;
+
+void jiecheng(int t);
+int Partation(int *a, int n, int start, int end);
+int max_sum(int* a, int n);
+void front_adjust(int* a, int n, int x);
+void back_adjust(int* a, int n, int x);
+vector<char*> detach_c(const char* p);
+vector<string> detach_s(string s);
+int search1(int* a, int n, int key);
+int search2(int* a, int n, int key);
+void holloand(int* a, int n);
+int** CreatNewshuzu(int n);
+double Sqrt(double a);
+int IpToInt(string s);
+void reverse(char* pBegin, char* pEnd);
+char* SentenceReverse(char* str);
+
+//类的继承（虚函数有无重写问题）
+class C
+{
+public:
+	C() {}
+	virtual void funa() { cout << "this is a "; }
+	virtual ~C() {}
+};
+class D :public C
+{
+public:
+	D() {}
+	~D() {}
+};
+
+union EF
+{
+	int a;
+	char b;
+};
+
+//int main()
+//{
+//	/*int a[10] = { 1,5,-6,2,-8,9,23,-10,11,1 };
+//	cout << max_sum(a, 10) << endl;
+//
+//	int b[9] = { 4, 0, 1, 0, 2,3, 6, 0, 5 };
+//	front_adjust(b, 9, 0);
+//	for (int i = 0;i < 9;i++)
+//		cout << b[i] << ",";
+//	cout << endl;
+//
+//	int c[9] = { 4, 0, 1, 0, 2,3, 6, 0, 5 };
+//	back_adjust(c, 9, 0);
+//	for (int i = 0;i < 9;i++)
+//		cout << c[i] << ",";
+//	cout << endl;
+//
+//	char d[] = "wqeqwqe qqqq ssss erre";
+//	vector<char*> v = detach_c(d);
+//	for (int i = 0;i < v.size();i++)
+//		cout << v[i] << endl;
+//
+//	string s = "wqeqwqe qqqq ssss erre";
+//	vector<string> v1 = detach_s(s);
+//	for (int i = v1.size() - 1;i >= 0;i--)
+//	{
+//		cout << v1[i] << endl;
+//	}
+//
+//	int e[] = {1,2,3,5,6,7,8,9,10};
+//	int i = search1(e, sizeof(e) / sizeof(int), 4);
+//	cout << i << endl;
+//	cout << e[i] << endl;
+//
+//	int f[] = { 1,2,2,2,2,2,2,9,10 };
+//	int j = search2(f, sizeof(f) / sizeof(int), 2);
+//	cout << j << endl;
+//
+//	int g[] = { 1, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2 };
+//	holloand(g, sizeof(g) / sizeof(int));
+//	for (int k = 0;k < sizeof(g) / sizeof(int);k++)
+//		cout << g[k] << " ";
+//	cout<<endl;
+//
+//	cout << Sqrt(2) << endl;
+//
+//	C aaa;
+//	D bbb;
+//
+//	aaa.funa();
+//	bbb.funa();
+//
+//	C* pa = &bbb;
+//	pa->funa();*/
+//
+//	/*string s = "10.2.3.5";
+//	cout << IpToInt(s) << endl;*/
+//
+//	char p[] = "i am a  student";
+//	char* q = SentenceReverse(p);
+//	cout << q << endl;
+//
+//	
+//}
+int main()
+{
+	int n;
+	cin >> n;
+	int cnt = 0;
+	while (n >= 3 | n % 3 > 1)
+	{
+		if (n < 3 && n % 3 <= 1)
+			n++;
+		cnt += n / 3;
+		n = n / 3 + n % 3;
+	}
+	cout << cnt << endl;
+}
+
+
+//两个队列实现栈
+template <typename T>
+class Stack
+{
+private:
+	queue<T> q1;
+	queue<T> q2;
+
+public:
+	void push(const T& t)
+	{
+		q1.push(t);
+	}
+	void pop()
+	{
+		if (!q1.empty())
+		{
+			while (q1.size() > 1)
+			{
+				T tmp = q1.front();
+				q2.push(tmp);
+				q1.pop();
+			}
+			q1.pop();
+		}
+		else
+		{
+			while (q2.size() > 1)
+			{
+				T tmp = q2.front();
+				q1.push(tmp);
+				q2.pop();
+			}
+			q2.pop();
+		}
+	}
+};
+
+//两个栈实现队列
+template <typename T>
+class Queue
+{
+private:
+	stack<T> s1;
+	stack<T> s2;
+
+public:
+	void push(const T& t)
+	{
+		s1.push(t);
+	}
+	void pop()
+	{
+		if (!s1.empty())
+		{
+			while (s1.size() > 1)
+			{
+				T tmp = s1.top();
+				s2.push(tmp);
+				s1.pop();
+			}
+			s1.pop();
+		}
+		else
+		{
+			s2.pop();
+		}
+	}
+};
+//实现一个类
+class String
+{
+private:
+	char* data;
+	size_t length;
+public:
+	String() {}
+	String(const char* str)
+	{
+		if (str == NULL)
+		{
+			length = 0;
+			data = new char[1];
+			*data = '\0';
+		}
+		else
+		{
+			length = strlen(str);
+			data = new char[length];
+			strcpy(data, str);
+		}
+	}
+	String(const String& str)
+	{
+		length = str.length;
+		data = new char[length + 1];
+		strcpy(data, str.data);
+	}
+	String& operator =(const String& str)
+	{
+		if (this == &str)
+			return *this;
+
+		delete[] data;
+		length = str.length;
+		data = new char[length + 1];
+		strcpy(data, str.data);
+
+		return *this;
+	}
+	virtual ~String()
+	{
+		delete[] data;
+		length = 0;
+	}
+};
+//n的阶乘
+void jiecheng(int n)
+{
+	vector<int> v;
+	v.push_back(1);
+	int cnt = 0;
+	for (int i = 1; i <= n; i++)
+	{
+		cnt = 0;
+		for (int j = 0; j < v.size(); j++)
+		{
+			int sum = v[j] * i + cnt;
+			if (sum >= 10)
+			{
+				v[j] = sum % 10;
+				cnt = sum / 10;
+			}
+			else
+			{
+				v[j] = sum;
+				cnt = 0;
+			}
+		}
+		if (cnt > 0)
+		{
+			while (cnt != 0)
+			{
+				v.push_back(cnt % 10);
+				cnt /= 10;
+			}
+		}
+	}
+	for (int i = v.size() - 1; i >= 0; i--)
+		cout << v[i];
+	cout << endl;
+}
+
+
+//vector的push_back()
+//template<typename T>
+//void push_back(const T& t)
+//{
+//	if (finish == end_of_storage)
+//	{
+//		construct(finish, t);
+//		finish++;
+//	}
+//	else
+//	{
+//		insert_aux(end(), t);
+//	}
+//}
+//template<typename T,Alloc> //有问题，但不会写
+//void vector<T, Alloc>::insert_aux(iterator position, const T& x)
+//{
+//	if (finish != end_of_storage)
+//	{
+//		construct(finish, *(finish - 1));//需要自己写
+//		++finish;
+//		T x_copy = x;
+//		copy_backward(position, finish - 2, finish - 1);//copy_backward 有这个函数
+//		*position = x_copy;
+//	}
+//	else
+//	{
+//		const size_type old_size = size();
+//		const size_type len = old_size != 0 ? 2 * old_size : 1;
+//		iterator new_start = data_allocator::allocate(len);
+//		iterator new_finish = new_start;
+//		try
+//		{
+//			new_finish = uninitialized_copy(start, position, new_start);
+//			construct(new_finish, x);
+//			++new_finish;
+//			new_finish = uninitialized(position, finish, new_finish);
+//		}
+//		catch (...)
+//		{
+//			destory(new_start, new_finish);
+//			data_allocator::deallocate(new_start, len);
+//			throw;
+//		}
+//		destory(begin(), end());
+//		deallocate();
+//		start = new_start;
+//		finish = new_finish;
+//		end_of_storage = new_start + len;
+//	}
+//}
+//数对
+void sum_count(int* a, int* path, int n, int sum, int start, int top, long long& count)
+{
+	for (int i = start; i < n; i++)
+	{
+		sum -= a[i];
+		path[top++] = i;
+		if (sum == 0)
+		{
+			count++;
+			for (int j = 0; j < top; j++)
+				cout << a[path[j]];
+			cout << endl;
+		}
+		else if (sum > 0)
+			sum_count(a, path, n, sum, i + 1, top, count);
+		sum += a[i];
+		top--;
+	}
+}
+//寻找元素在数组中的位置,中位数(k位数)
+int Partation(int *a, int n, int start, int end)
+{
+	if (a == NULL || n <= 0 || start < 0 || end >= n)
+		return -1;
+	srand(time(NULL));
+	int r = start + rand() % (end - start);
+	swap(a[r], a[end]);
+	int small = start - 1;
+	for (int i = start; i < end; i++)
+	{
+		if (a[i] < a[end])
+		{
+			small++;
+			if (small != i)
+				swap(a[small], a[i]);
+		}
+	}
+	++small;
+	swap(a[small], a[end]);
+	return small;
+}
+int Kth_number(int* a, int k, int n)
+{
+	if (a == NULL || k < 0)
+		return -1;
+
+	int start = 0;
+	int end = n - 1;
+	int index = Partation(a, n, start, end);
+
+	while (index != k - 1)
+	{
+		if (index > k - 1)
+		{
+			end = index - 1;
+			index = Partation(a, n, start, end);
+		}
+		else
+		{
+			start = index + 1;
+			index = Partation(a, n, start, end);
+		}
+	}
+	return a[index];
+}
+multiset<int, greater<int>> m;
+multiset<int, greater<int>>::iterator it;  //比最大值要小，前k个最小
+void getkthnum(vector<int>& a, int k)
+{
+	m.clear();
+	if (a.size() < k || k < 1)
+		return;
+
+	for (int i = 0; i < k; i++)
+		m.insert(a[i]);
+
+	for (int i = k; i < a.size(); i++)
+	{
+		it = m.begin();
+		if (a[i] < *it)
+		{
+			m.erase(it);
+			m.insert(a[i]);
+		}
+	}
+}
+multiset<int, less<int>> ml;
+multiset<int, less<int>>::iterator it1;  //比最小值要大，前k个最大
+//LRU
+template <typename K,typename T>
+struct Node
+{
+	K key;
+	T data;
+	CacheNode *prev, *next;
+};
+
+//template <typename K,typename T>
+//class LRUCache
+//{
+//public:
+//	LRUCache(size_t size);
+//	~LRUCache();
+//	void Put(K key, T data);
+//	T Get(K key);
+//	int getCount() { return count; }//cache miss count
+//private:
+//	void attach(Node<K, T> *node);//插入到链表头
+//	void detach(Node<K, T> *node);//链表中删除节点
+//
+//	int count;//cache miss count
+//	unordered_map<K, Node<K, T>*> hashmap_;//hash表
+//	vector<Node<K, T>*> free_entries_;//用来表示cache是否已满，类似内存池pool
+//	Node<K, T> *head_, *tail_;//头节点、尾节点
+//	Node<K, T> *entries_;//申请cache的首地址
+//};
+//
+//template <typename K,typename T>
+//LRUCache<K, T>::LRUCache(size_t size)
+//{
+//	count = 0;
+//	entries_ = new Node<K, T>[size];
+//	for (int i = 0; i < size; i++)
+//		free_entries_.push_back(entries_ + i);
+//	head_ = new Node<K, T>;
+//	tail_ = new Node<K, T>;
+//	head_->prev = NULL;
+//	head_->next = tail_;
+//	tail_->prev = head_;
+//	tail_->next = NULL;
+//}
+//
+//template <typename K,typename T>
+//LRUCache<K, T>::~LRUCache()
+//{
+//	delete head_;
+//	delete tail_;
+//	delete[] entries_;
+//}
+//
+//template <typename K, typename T>
+//void LRUCache<K, T>::Put(K key, T data)
+//{
+//	Node<K, T>* node = hashmap_[key];
+//	if (NULL != node)//cache hit;
+//	{
+//		detach(node);
+//		node->key = key;
+//		node->data = data;
+//		attach(node);
+//	}
+//	else
+//	{
+//		if (free_entries_.empty())//cache full? ？？不懂  以及hashmap_的用处也不清楚
+//		{
+//			node = tail_->prev;
+//			detach(node);
+//			hashmap_.earse(node->key);//最后一个节点删除
+//		}
+//		else
+//		{
+//			node = free_entries_.back();
+//			free_entries_.pop_back();
+//		}
+//		//插入新节点
+//		node->key = key;
+//		node->data = data;
+//		hashmap_[key] = node;
+//		attach(node);
+//	}
+//}
+//
+//template <typename K, typename T>
+//T LRUCache<K, T>::Get(K key)
+//{
+//	Node<K, T> *node = hashmap_[key];
+//	if (NULL != node)//cache hit
+//	{
+//		detach(node);
+//		attach(node);
+//		return node->data;
+//	}
+//	else//cache miss
+//	{
+//		++count;
+//		Put(key, T());
+//		// return T();
+//	}
+//}
+//
+//template <typename K, typename T>
+//void LRUCache<K, T>::attach(Node<K, T> *node) //构造双向链表
+//{
+//	node->next = head_->next;
+//	head_->next = node;
+//	node->next->prev = node;
+//	node->prev = head_;
+//}
+//
+//template <typename K, typename T>
+//void LRUCache<K, T>::detach(Node<K, T> *node) //从双向链表中删除节点
+//{
+//	node->prev->next = node->next;
+//	node->next->prev = node->prev;
+//}
+////前缀树
+//class Trie
+//{
+//private:
+//	Trie* next[26] = {};//26个字母
+//	bool isword = false;
+//	//这里可以添加任何你想放置在某一结点处的变量
+//public:
+//	Trie() {}
+//	void insert(string word)
+//	{
+//		Trie* node = this;
+//		for (auto ch : word)
+//		{
+//			ch -= 'a';
+//			if (!node->next[ch])
+//				node->next[ch] = new Trie();
+//			node = node->next[ch];
+//		}
+//		node->isword = true;
+//	}
+//	bool search(string word)
+//	{
+//		Trie* node = this;
+//		for (auto ch : word)
+//		{
+//			ch -= 'a';
+//			if (!node->next[ch])
+//				return false;
+//			node = node->next[ch];
+//		}
+//		return node->isword;
+//	}
+//	bool startwith(string prefix)
+//	{
+//		Trie* node = this;
+//		for (auto ch : prefix)
+//		{
+//			if (!node->next[ch])
+//				return false;
+//			node = node->next[ch];
+//		}
+//		return true;
+//	}
+//};
+//单例
+mutex m_mutex;
+class Singleton_lazy
+{
+private:
+	static Singleton_lazy* p;
+	Singleton_lazy() {}
+public:
+	static Singleton_lazy* getInstence()
+	{
+		if (p == NULL)
+		{
+			lock_guard<mutex> lock(m_mutex);
+			if (p == NULL)
+				p = new Singleton_lazy();
+			return p;
+		}
+	}
+};
+Singleton_lazy* Singleton_lazy::p = NULL;
+
+class Singleton_Hunger
+{
+private:
+	static Singleton_Hunger* p;
+	Singleton_Hunger() {}
+public:
+	static Singleton_Hunger* getInstence()
+	{
+		return p;
+	}
+};
+Singleton_Hunger* Singleton_Hunger::p = new Singleton_Hunger();
+//连续数组最大和
+int max_sum(int* a, int n)
+{
+	int* dp = new int[n];
+	int max = INT_MIN;
+	memset(dp, 0, sizeof(dp));
+	for (int i = 0; i < n; i++)
+	{
+		if (dp[i - 1] + a[i] > 0)
+			dp[i] = dp[i - 1] + a[i];
+		else
+			dp[i] = 0;
+		if (max <= dp[i])
+			max = dp[i];
+	}
+	delete[] dp;
+	return max;
+}
+//移动数组中的元素(前移)
+void front_adjust(int* a, int n, int x)
+{
+	int i, j = n - 1;
+	for (i = n - 1; i >= 0; i--)
+	{
+		if (a[i] != x)
+		{
+			if (a[j] == x)
+				swap(a[i], a[j]);
+			j--;
+		}
+	}
+}
+//移动数组中的元素（后移）
+void back_adjust(int* a, int n, int x)
+{
+	int i = 0, j = 0;
+	for (; i < n; i++)
+	{
+		if (a[i] != x)
+		{
+			if (a[j] == x)
+				swap(a[i], a[j]);
+			j++;
+		}
+	}
+}
+//删除vector<int>中指定元素的值
+void delete_vector(vector<int>& a, int x)
+{
+	vector<int>::iterator it = a.begin();
+	for (; it != a.end();)
+	{
+		if (*it == x)
+		{
+			it = a.erase(it);
+		}
+		else
+			it++;
+	}
+}
+//字符串分离
+vector<char*> detach_c(const char* p)
+{
+	vector<char*> v;
+	if (p == NULL)
+		return v;
+	char* q;
+	const char* d = " ";
+	q = strtok((char*)p, d);
+	while (q)
+	{
+		v.push_back(q);
+		q = strtok(NULL, d);
+	}
+	return v;
+}
+vector<string> detach_s(string s)
+{
+	vector<string> v;
+	int j = 0;
+	for (int i = 1; i < s.size();)
+	{
+		if (s[i] != ' ')
+			i++;
+		else if (s[i] == ' '&&s[i - 1] == ' ')
+		{
+			i++;
+			j++;
+		}
+		else if (s[i] == ' '&&s[i - 1] != ' ')
+		{
+			string ss(s.begin() + j, s.begin() + i);
+			v.push_back(ss);
+			i++;
+			j = i;
+		}
+	}
+	string ss(s.begin() + j, s.end());
+	v.push_back(ss);
+	return v;
+}
+//约瑟夫环
+int Last_enm(int n, int m)
+{
+	if (n < 1 || m < 1)
+		return 0;
+
+	int last = 0;
+	for (int i = 2; i <= n; i++)
+	{
+		last = (last + m) % i;
+	}
+	return last;
+}
+//有序数组找数(没找到，返回比他大的最小的数)
+int search1(int* a, int n, int key)
+{
+	int low = 0, high = n - 1;
+	int middle = low + (high - low) / 2;
+	while (low <= high)
+	{
+		middle = low + (high - low) / 2;
+		if (a[middle] == key)
+			return middle;
+		else if (a[middle] > key)
+			high = middle - 1;
+		else if (a[middle] < key)
+			low = middle + 1;
+	}
+	return middle;
+}
+//有序数组找数(如果有多个相同的数，则返回下标的平均值)
+int search2(int* a, int n, int key)
+{
+	int low = 0, high = n - 1;
+	while (low <= high)
+	{
+		int middle = low + (high - low) / 2;
+		if (a[middle] == key)
+		{
+			int sum = middle;
+			int cnt = 1;
+			for (int i = middle + 1; i <= high; i++)
+			{
+				if (a[i] == key)
+				{
+					sum += i;
+					cnt++;
+				}
+				else
+					break;
+			}
+			for (int j = middle - 1; j >= low; j--)
+			{
+				if (a[j] == key)
+				{
+					sum += j;
+					cnt++;
+				}
+				else
+					break;
+			}
+			return (sum / cnt);
+		}
+		else if (a[middle] > key)
+			high = middle - 1;
+		else if (a[middle] < key)
+			low = middle + 1;
+	}
+	return -1;
+}
+
+//c实现c++继承
+typedef void(*fun)();
+struct A
+{
+	fun f;
+};
+
+struct B
+{
+	A a;
+};
+void funa()
+{
+	cout << "this is A" << endl;
+}
+void funb()
+{
+	cout << "this is B" << endl;
+}
+void test()
+{
+	A a;
+	B b;
+
+	a.f = funa;
+	b.a.f = funb;
+
+	A *pa = &a;
+	pa->f();
+
+	pa = (A*)&b;
+	pa->f();
+}
+//堆排序
+void max_heap(int* a, int n, int start)
+{
+	int i = start;
+	int temp = a[i];
+	int j = 2 * i + 1;
+	while (j < n)
+	{
+		if (j + 1 < n&&a[j + 1] > a[j])
+		{
+			j++;
+		}
+		if (temp > a[j])
+			break;
+		else
+		{
+			a[i] = a[j];
+			i = j;
+			j = 2 * i + 1;
+		}
+	}
+	a[i] = temp;
+}
+void heap_sort(int *a, int n)
+{
+	for (int i = n / 2 - 1; i >= 0; i--)
+		max_heap(a, n, i);
+	for (int i = n - 1; i >= 1; i--)
+	{
+		swap(a[0], a[i]);
+		max_heap(a, i, 0);
+	}
+}
+//冒泡
+void bubble_sort(int* a, int n)
+{
+	bool flag = false;
+	do
+	{
+		flag = false;
+		for (int i = 0; i < n; i++)
+		{
+			if (a[i] > a[i + 1])
+			{
+				swap(a[i], a[i + 1]);
+				flag = false;
+			}
+		}
+		n--;
+	} while (flag);
+}
+//快排
+void quick_sort(int* a, int start, int end)
+{
+	int left = start;
+	int right = end;
+	int value = a[start];
+	while (left < right)
+	{
+		while (left < right&&a[right] >= value)
+			right--;
+		a[left++] = a[right];
+		while (left < right&&a[left] <= value)
+			left++;
+		a[right--] = a[left];
+	}
+	a[left] = value;
+	quick_sort(a, start, left - 1);
+	quick_sort(a, right + 1, end);
+}
+//选择
+void select_sort(int* a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		int k = i;
+		int temp = a[i];
+		for (int j = i + 1; j < n; j++)
+		{
+			if (a[k] > a[j])
+				k = j;
+		}
+		if (k != i)
+		{
+			a[i] = a[k];
+			a[k] = temp;
+		}
+	}
+}
+//插入
+void insert_sort(int*a, int n)
+{
+	for (int i = 1; i < n; i++)
+	{
+		int temp = a[i];
+		int j = i - 1;
+		for (; j >= 0; j--)
+		{
+			if (a[j] > temp)
+				a[j + 1] = a[j];
+			else
+				break;
+		}
+		a[j + 1] = temp;
+	}
+}
+//归并
+void merge(int*a, int* temp, int first, int last, int middle)
+{
+	int i = first, m = middle, j = middle + 1, n = last, k = 0;
+	for (; i <= m && j <= n;)
+	{
+		if (a[j] <= a[i])
+			temp[k++] = a[i++];
+		else
+			temp[k++] = a[j++];
+	}
+	while (i <= m)
+		temp[k++] = a[i++];
+	while (j <= n)
+		temp[k++] = a[j++];
+	for (int l = 0; l < k; l++)
+		a[first + l] = temp[l];
+}
+void merge_sort(int*a, int first, int last, int* temp)
+{
+	if (first < last)
+	{
+		int mid = (first + last) / 2;
+		merge_sort(a, first, mid, temp);
+		merge_sort(a, mid + 1, last, temp);
+		merge(a, temp, first, last, mid);
+	}
+}
+
+//两个集合的交集 
+vector<int> jiaoji(vector<int>& a, vector<int>&b)
+{
+	vector<int> v;
+	if (a.size() == 0 || b.size() == 0)
+		return v;
+	sort(a.begin(), a.end());
+	sort(b.begin(), b.end());
+	for (int i = 0, j = 0; i < a.size() && j < b.size();)
+	{
+		if (a[i] == b[j])
+		{
+			v.push_back(a[i]);
+			i++;
+			j++;
+		}
+		else if (a[i] > b[j])
+			j++;
+		else if (a[i] < b[j])
+			i++;
+	}
+}
+//逆序链表
+struct ListNode
+{
+	int val;
+	ListNode* next;
+	ListNode() { next = NULL; }
+};
+ListNode* ReverseList(ListNode* head)
+{
+	ListNode* pReverseHead = NULL;
+	ListNode* pCurrent = head;
+	ListNode* pPrev = NULL;
+	while (pCurrent != NULL)
+	{
+		ListNode* pNext = pCurrent->next;
+		if (pNext == NULL)
+			pReverseHead = pCurrent;
+
+		pCurrent->next = pPrev;
+		pPrev = pCurrent;
+		pCurrent = pNext;
+	}
+	return pReverseHead;
+}
+//二叉树的公共祖先
+struct TreeNode
+{
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+};
+void getpath(TreeNode* root, TreeNode* node, vector<TreeNode*> path, bool &flag)
+{
+	if (!root)
+		return;
+	path.push_back(root);
+	if (root == node)
+	{
+		flag = true;
+		return;
+	}
+	else
+	{
+		getpath(root->left, node, path, flag);
+		if (flag == true)
+			return;
+		path.pop_back();
+		getpath(root->right, node, path, flag);
+		if (flag == true)
+			return;
+		path.pop_back();
+	}
+}
+TreeNode* commonnode(vector<TreeNode*>&a, vector<TreeNode*>&b)
+{
+	TreeNode* p = NULL;
+	for (int i = 0, j = 0; i < a.size() && j < b.size();)
+	{
+		if (a[i] == a[j])
+		{
+			p = a[i];
+			i++;
+			j++;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return p;
+}
+//荷兰国旗问题
+void holloand(int* a, int n)
+{
+	int i = 0, j = n - 1;
+	for (int l = 0; l <= j;)
+	{
+		while (a[j] == 2)
+			j--;
+		while (a[i] == 0)
+			i++;
+		if (a[l] == 1)
+			l++;
+		else if (a[l] == 0)
+		{
+			swap(a[l], a[i]);
+			i++;
+		}
+		else if (a[l] == 2)
+		{
+			swap(a[l], a[j]);
+			j--;
+		}
+	}
+}
+//平方根
+double Sqrt(double a)
+{
+	double x = a;
+	int eps = 1e-9;
+	while (x*x - a > eps)
+		x = (x + a / x) / 2;
+	return x;
+}
+//滑动窗口问题(队列最大值)
+vector<int> maxwindows(int* a, int size, int n)
+{
+	vector<int> v;
+	if (a != NULL && n >= 1)
+	{
+		deque<int> d;
+		for (int i = 0; i < size; i++)
+		{
+			while (!d.empty() && a[i] >= a[d.back()])
+				d.pop_back();
+
+			d.push_back(i);
+		}
+
+		for (int i = size; i < n; i++)
+		{
+			v.push_back(a[d.front()]);
+
+			while (!d.empty() && a[i] >= a[d.back()])
+				d.pop_back();
+			if (!d.empty() && d.front() <= i - size)
+				d.pop_front();
+
+			d.push_back(i);
+		}
+		v.push_back(a[d.front()]);
+	}
+	return v;
+}
+//栈的最大/最小值
+//template <typename T>
+//class StackWithMin
+//{
+//private:
+//	stack<int> m_data;
+//	stack<int> m_min;
+//public:
+//	void push(const T& t);
+//	void pop();
+//	T top();
+//};
+//template <typename T>
+//void StackWithMin<T>::push(const T&t)
+//{
+//	m_data.push(t);
+//	if (m_min.size() == 0 || value < m_min.top())
+//		m_min.push(t);
+//	else
+//		m_min.push(m_min.top());
+//}
+//template <typename T>
+//void StackWithMin<T>::pop()
+//{
+//	assert(m_data.size() > 0 && m_min.size() > 0);
+//	m_data.pop();
+//	m_min.pop();
+//}
+//template <typename T>
+//T StackWithMin<T>::top()
+//{
+//	assert(m_data.size() > 0 && m_min.size() > 0);
+//	return m_min.top();
+//}
+//如何new一个二维数组
+int** CreatNewshuzu(int n)
+{
+	int** p = new int*[n];
+	for (int i = 0; i < n; i++)
+		p[i] = new int[n];
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			p[i][j] = 1;
+	return p;
+}
+//朋友圈问题
+int findCircleNum(vector<vector<int>>& M)
+{
+	int ret = 0;
+	//使用BFS解决的
+	for (int i = 0; i < M.size(); i++)
+	{
+		queue<int> mq;
+		if (M[i][i] == 0)
+			continue;
+		ret++;
+		for (int j = i; j < M.size(); j++)
+		{
+			if (M[i][j] == 1)
+			{
+				M[i][j] = 0;
+				if (i != j)
+					mq.push(j);
+			}
+		}
+
+		while (!mq.empty())
+		{
+			int r = mq.front();
+			mq.pop();
+			if (M[r][r] == 0)
+				continue;
+			for (int j = 0; j < M.size(); j++)
+			{
+				if (M[r][j] == 1)
+				{
+					M[r][j] == 0;
+					if (j != r)
+						mq.push(j);
+				}
+			}
+		}
+	}
+	return ret;
+}
+//十进制的IP地址转换为一个32位的整数
+int IpToInt(string s)
+{
+	int ret = 0;
+	int num = 0;
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] != '.')
+		{
+			num = num * 10 + (s[i] - '0');
+		}
+		else
+		{
+			cout << num << endl;
+			ret = ret << 8;
+			ret += num;
+			cout << ret << endl;
+			num = 0;
+		}
+	}
+	ret = ret << 8;
+	ret += num;
+	return ret;
+}
+//位图函数实现
+#define SHIFT 5
+#define MAXLINE 32
+#define MASK 0x1F
+void setbit(int *bitmap, int i)
+{
+	bitmap[i >> SHIFT] |= (1 << (i&MASK));
+}
+bool getbit(int *bitmap, int i)
+{
+	return bitmap[i >> SHIFT] & (1 << (i&MASK));
+}
+//全排列函数
+vector<string> v;
+void All_list(string s, int start, int end)
+{
+	if (start == end)
+	{
+		v.push_back(s);
+		return;
+	}
+
+	for (int i = start; i < end; i++)
+	{
+		//if (!isswap(s, start, i))
+		//	continue;
+		if (i != start && s[i] == s[start])
+			continue;
+		swap(s[i], s[start]);
+		All_list(s, start + 1, end);
+		swap(s[i], s[start]);
+	}
+}
+bool isswap(string s, int start, int end)
+{
+	bool flag = true;
+	for (int i = start; i < end; i++)
+	{
+		if (s[i] == s[end])
+		{
+			flag = false;
+			break;
+		}
+	}
+	return flag;
+}
+//大端方式将高位存放在低地址，小端方式将低位存放在低地址
+//一个16进制的数据0x12345678,中的78是低位，存放在内存中的高位中。所以如果定义了short int a=0x12345678;在大端的模式下输出的是12.
+
+//kmp算法,对模式串求next数组
+void getNext(const string& dst, vector<int>& next)
+{
+	int j = 0, k = -1;
+	int m = dst.size();
+	next[0] = -1;
+	while (j < m - 1)
+	{
+		if (k == -1 || dst[j] == dst[k])
+		{
+			j++;
+			k++;
+			next[j] = k;
+		}
+		else
+			k = next[k];
+	}
+}
+int kmp(const string& src, const string& dst, vector<int>& next)
+{
+	//int next[str2.size()]={0};
+	//getnext(str2,next);
+	int ls = src.size();
+	int ld = dst.size();
+	int posS = 0, posD = 0;
+	while (posS < ls&&posD < ld)
+	{
+		if (posD == -1 || src[posS] == dst[posD])
+		{
+			posS++;
+			posD++;
+		}
+		else
+			posD = next[posD];
+	}
+	if (posD < ld)
+		return -1;
+	else
+		return posS - ld;
+}
+//二叉树遍历
+//前
+vector<int> vv;
+vector<int> preorderTraversal(TreeNode* root)
+{
+	if (root == NULL) return vv;
+	stack<TreeNode*> s;
+	s.push(root);
+	while (!s.empty())
+	{
+		TreeNode* p = s.top();
+		s.pop();
+		vv.push_back(p->val);
+		if (p->right != NULL)
+			s.push(p->right);
+		if (p->left != NULL)
+			s.push(p->left);
+	}
+	return vv;
+
+	if (root != NULL)
+	{
+		vv.push_back(root->val);
+		preorderTraversal(root->left);
+		preorderTraversal(root->right);
+	}
+}
+//中
+vector<int> vvv;
+vector<int> inorder(TreeNode* root)
+{
+	if (root == NULL) return vvv;
+	stack<TreeNode*> s;
+	s.push(root);
+	TreeNode* p = s.top();
+	while (p != NULL && !s.empty())
+	{
+		if (p->left != NULL)
+		{
+			p = p->left;
+			s.push(p);
+		}
+		else
+		{
+			p = s.top();
+			s.pop();
+			vvv.push_back(p->val);
+			p = p->right;
+		}
+	}
+	return vvv;
+
+	if (root != NULL)
+	{
+		inorder(root->left);
+		vvv.push_back(root->val);
+		inorder(root->right);
+	}
+}
+//后
+vector<int> vvvv;
+vector<int> postorder(TreeNode* root)
+{
+	if (root == NULL) return vvvv;
+	stack<TreeNode*> s;
+	s.push(root);
+	while (!s.empty())
+	{
+		TreeNode* p = s.top();
+		s.pop();
+		vvvv.push_back(p->val);
+		if (p->left != NULL)
+			s.push(p->left);
+		if (p->right != NULL)
+			s.push(p->right);
+	}
+	reverse(vvvv.begin(), vvvv.end());
+	return vvvv;
+
+	if (root != NULL)
+	{
+		postorder(root->left);
+		postorder(root->right);
+		vvvv.push_back(root->val);
+	}
+}
+//memcpy
+void* memcpy(void* dst, void* src, size_t n)
+{
+	if (src == NULL || dst == NULL)
+		return NULL;
+	void* ret = dst;
+	char* psrc = (char*)src;
+	char* pdst = (char*)dst;
+	if (pdst > psrc&&pdst < psrc + n)
+	{
+		pdst = pdst + n - 1;
+		psrc = psrc + n - 1;
+		while (n--)
+		{
+			*pdst-- = *psrc--;
+		}
+	}
+	else
+	{
+		while (n--)
+		{
+			*pdst = *psrc;
+			pdst++;
+			psrc++;
+		}
+	}
+}
+//翻转句子
+void reverse(char* pBegin, char* pEnd)
+{
+	if (pBegin == NULL || pEnd == NULL)
+		return;
+	while (pBegin < pEnd)
+	{
+		int temp = *pBegin;
+		*pBegin = *pEnd;
+		*pEnd = temp;
+		pBegin++;
+		pEnd--;
+	}
+}
+
+char* SentenceReverse(char* str)
+{
+	if (str == NULL)
+		return NULL;
+	char* pBegin = str;
+	char* pEnd = str;
+	while (*pEnd != '\0')
+	{
+		pEnd++;
+	}
+	pEnd--;
+	reverse(pBegin, pEnd);
+	pBegin = str;
+	pEnd = str;
+	while (*pBegin != '\0')
+	{
+		if (*pBegin == ' '&&*pEnd == ' ')
+		{
+			pBegin++;
+			pEnd++;
+		}
+		else if (*pEnd == ' ' || *pEnd == '\0')
+		{
+			reverse(pBegin, --pEnd);
+			pBegin = ++pEnd;
+		}
+		else
+			pEnd++;
+	}
+	return str;
+}
+//二维数组排序问题
+
+//二叉树变双向链表
+struct BinaryTreeNode
+{
+	int val;
+	BinaryTreeNode* left;
+	BinaryTreeNode* right;
+};
+BinaryTreeNode* Convert(BinaryTreeNode* pRootOfTree)
+{
+	BinaryTreeNode* pLastNodeInList = NULL;
+	ConvertNode(pRootOfTree,&pLastNodeInList);
+	
+	//pLastNodeInList指向双向链表的尾节点
+	//需要返回头节点
+	BinaryTreeNode* pHeadOfList = pLastNodeInList;
+	while (pHeadOfList != NULL && pHeadOfList->left != NULL)
+		pHeadOfList = pHeadOfList->left;
+
+	return pHeadOfList;
+}
+void ConvertNode(BinaryTreeNode* pNode, BinaryTreeNode** pLastNodeInList)
+{
+	if (pNode == NULL)
+		return;
+
+	BinaryTreeNode* pCurrent = pNode;
+	if (pCurrent->left != NULL)
+		ConvertNode(pCurrent->left, pLastNodeInList);
+
+	pCurrent->left=*pLastNodeInList;
+	if (*pLastNodeInList != NULL)
+		(*pLastNodeInList)->right = pCurrent;
+
+	*pLastNodeInList = pCurrent;
+	if(pCurrent->right!=NULL)
+		ConvertNode(pCurrent->right, pLastNodeInList);
+}
+//删除链表重复元素
+void DeleteDuplocation(ListNode* pHead)
+{
+	if (pHead == NULL)
+		return;
+
+	ListNode* pPreNode = NULL;
+	ListNode* pNode = pHead;
+	while (pNode != NULL)
+	{
+		ListNode* pNext = pNode->next;
+		bool needDelete = false;
+		if (pNext != NULL && pNext->val == pNode->val)
+			needDelete = true;
+
+		if (!needDelete)
+		{
+			pPreNode = pNode;
+			pNode = pNode->next;
+		}
+		else
+		{
+			int value = pNode->val;
+			ListNode* pToBeDel = pNode;
+			while (pToBeDel != NULL && pToBeDel->val == value)
+			{
+				pNext = pToBeDel->next;
+				delete pToBeDel;
+				pToBeDel = NULL;
+				pToBeDel = pNext;
+			}
+			if (pPreNode == NULL)
+				pHead = pNext;
+			else
+				pPreNode->next = pNext;
+			pNode = pNext;
+		}
+	}
+}
+//逆序对
+int InversePair(int* a, int length)
+{
+	if (a == NULL || length < 0)
+		return 0;
+	int* copy = new int[length + 1];
+	for (int i = 0; i < length; i++)
+		copy[i] = a[i];
+	int count = InversePairCore(a, copy, 0, length - 1);
+	delete[] copy;
+	copy = NULL;
+	return count;
+}
+int InversePairCore(int* a, int* copy, int start, int end)//可能有问题，要检查
+{
+	if (start == end)
+	{
+		copy[start] = a[start];
+		return 0;
+	}
+	int length = (end - start) / 2;
+	int left = InversePairCore(a, copy, start, start+length);
+	int right = InversePairCore(a, copy, start+length+1, end);
+	int i = start+length, j = end;
+	int count = 0;
+	int indexcopy = end;
+	while (i >= start && j >= start + length + 1)
+	{
+		if (a[i] > a[j])
+		{
+			copy[indexcopy--] = a[i--];
+			count += j - length - start;
+		}
+		else
+		{
+			copy[indexcopy--] = a[j--];
+		}
+	}
+	while (i >= start)
+		copy[indexcopy--] = a[i--];
+	while (j >= start + length + 1)
+		copy[indexcopy--] = a[j--];
+	for (i = start; i <= end; i++)//剑指offer上没有这个，是错的
+		a[i] = copy[i];
+	return left + right + count;
+}
+//链表的快排
+struct LNode
+{
+	int val;
+	LNode* next;
+};
+void List_swap(LNode* a, LNode* b)
+{
+	int temp = a->val;
+	a->val = b->val;
+	b->val = temp;
+}
+LNode* getmiddle(LNode* start, LNode* end)
+{
+	if (start == end || start->next == end)
+		return start;
+	LNode *p = start, *q = start, *k = start;
+	while (q != end)
+	{
+		if (q->val < k->val)
+		{
+			p = p->next;
+			List_swap(p, q);
+		}
+		q = q->next;
+	}
+	List_swap(p, k);
+	return p;
+}
+void ListQuickSort(LNode* start, LNode* end)
+{
+	if (start == end || start->next == end)
+		return;
+	LNode* mid = getmiddle(start, end);
+	ListQuickSort(start, mid);//因为是左闭右开区间，所以是从start到mid，而不是像数组快排一样，到mid-1；
+	ListQuickSort(mid + 1, end);
+}
+template <typename T>
+void list_quicksort(list<T> mylist)
+{
+	if (mylist->next == NULL || mylist == NULL || mylist->next->next == NULL)
+		return;
+	LNode* start = mylist->next;
+	LNode* end = NULL;
+	ListQuickSort(start, end);
+}
+//LCS、LIS

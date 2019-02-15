@@ -1,0 +1,336 @@
+内核空间： 总共4G内存， 内核空间在3g-4g中。  
+
+
+
+
+函数里面的$1,是传递过来的第一个参数
+
+
+
+
+
+shell：
+
+
+
+*****在终端中，（终端当做bash，即bourne again shell,一个shell软件？？？？ 对吗？？），把每一个命令当做开辟一个新的子进程，在子进程中，执行这个命令。  而这时，父进程切换到后台等待回收子进程（wait函数）。
+
+当命令行中的命令以括号扩起，即(pwd;cd ..;pwd)时， 这个命令运行在子进程中，而对父进程没有影响。
+去掉括号，则对父进程进行影响
+
+
+bash（shell）语句（运行在终端即可？）： 内建命令：如export、shift、if、eval、[、for、while等等，执行内建命令相当于调用shell进程中的一个函数，并不创建新的进程。 虽然内建命令不创建新的进程，但执行结束后也会有一个状态码，有Exit Status， 可用$?读出。  echo $? 上一句话成功执行返回0，失败返回非0 
+
+
+
+一般创建的文件没有执行权限。 可以用  chmod a+x xx.sh 使其具有可执行权限 a-x:去掉可执行权限
+然后 ./xx.sh 就可以执行文件中的内容
+
+
+脚本编程：#注释
+touch xx.sh  创建sh脚本
+脚本框架：  
+
+#！ /bin/sh      告诉程序加载器，去加载哪个程序解释器去执行(加载shell解释器，python也可通过这		种方式。 c/c++应该不行，毕竟不是脚本语句)
+
+pwd
+ls
+pwd
+
+
+执行方式：1. chmod a+x xx.sh  然后./xx.sh。（子进程执行？（是吗？），并不会影响外部所指，即不						论语句如何，都不会跳动）  
+	2. /bin/sh xx.sh
+	3.soucre ./xx.sh。  xx.sh不需要改变状态， source执行后会影响主进程指向（即原先在子文件夹中，执行命令后，运行完文件中的程序，可能会使指向指到文件夹的父文件夹： 原因在于文件中的程序没有带小括号， 若为(pwd;cd ..;pwd)这样的语句， 则不会跳动）
+	4. . ./xx.sh  与source ./xx.sh的作用和效果是一样的。
+
+sourece 和 .都是内建命令。 所以会对shell进程有影响。
+
+脚本语言：$(curl www.itcast.cn > ll.html)  在xx.sh中。  执行后会创建一个ll.html(若无)
+
+
+
+
+
+
+shell变量：
+1.环境变量：printenv命令显示当前shell进程的环境变量。 环境变量可以从父进程传给fork出的子进程。
+环境变量在内存3g的下面，可以存储当前路径等变量
+
+
+
+
+2.本地变量：只存在于当前shell进程，用set命令可以显示当前shell进程中定义的所有变量（本地和环境）和函数。本地变量保存在程序的栈上
+itcast$ VARNAME=value    定义或赋值一个变量
+
+dinner=‘gonga’  在终端命令行中创建变量
+set | grep dinner  显示的就是上面的话
+export dinner  把本地变量导出到环境变量中
+
+unset dinner  删除变量（环境和本地）。         echo $SHELL 返回shell类型。（必须大写）
+echo $dinner+3  返回的是一个字符串，而不是一个数值。  返回：55+3
+echo $(($dinner+3))   这样就返回了58，但只能做整数运算。
+
+touch -- -hello 才能创建-hello文件  touch ./-hello  添加路径，消除歧义
+rm -- -hello
+续行符：\     ls \ \ \ -l  就是执行ls -l
+
+
+
+
+shell脚本语法：
+条件测试：test：
+
+命令test或[可以测试一个条件是否成立，如果测试结果为真，则该命令的exit Status为0，反之为1（与C语言的逻辑表示正好相反）
+
+var=2
+test $var -gt 1      echo $?  输出0    gt是大于  ge大于等于
+[ $var -gt 3 ]         echo $?  输出1  []中要有空格
+
+变量的引用用$， 即
+s1=hello
+s2=hello
+[ $s1=$s2 ]
+echo $?   输出0
+[ s1=s2 ]
+echo $?   输出1   这时判断的其实是s1与s2是否相等
+
+‘$s1’中仅仅是变量名，并不展开,即显示s1。“$s1”中，对变量进行展开，即把变量值显示出来hello
+
+s4=
+[ "$s1"="s4" ]  语法正确，等号右边为空串。   =s4   等号右边为空，这是错的
+
+
+-a 逻辑与  -o 逻辑或  ！非
+[ expr1 -o expr2 ]
+
+
+
+
+
+
+
+分支语句：
+
+if [ -f ~/.bashrc]   判断是否为普通文件    -d  目录
+then  
+else
+fi    这是结束这段if
+
+案例：
+
+#！ /bin/sh
+
+echo "Is it morning? Please answer yes or no."
+read YES_OR_NO       创建一个变量，用来接收键盘的输入
+if [ "$YES_OR_NO" = "yes" ];then echo "xxx";elif [ "$YES_OR_NO" = "no" ]; then echo "yyy"
+else 
+	echo "www"
+	exit 1
+fi
+	exit 0
+
+
+if is_directory "$DIR"   如果函数是目录
+then ：   		这个冒号相当于空语句，如果什么都不相干，就加：
+else
+	xxxx
+
+
+
+
+
+case语句：
+case "$YES_OR_NO" in
+yes|y|Yes|YES)
+	echo "xxx";;
+[nN]*)                   匹配N*或n*  ，*为任意字符
+	echo "yyy";;
+*)
+	echo "www"
+	exit 1;;
+esac                   case中，当遇到;;结尾，表示跳出，相当于break
+exit 0
+
+
+
+
+
+
+
+
+
+
+循环语句：
+for语句很像python中的语句。  for xx in yy（列表名）zz aa; do echo "i like $xx" ; done
+输出：i like yy   i like zz   i like aa
+
+$ for filename in `ls chap?`; do mv $filename $filename~;done
+``之间的语句是要执行的命令
+
+
+while [ "$TRY" != "secret" ]; do    
+	echo "xxx"
+	read TRY
+done
+
+COUNTER=1
+while [ "$COUNTER" -lt 10 ]; do    
+	echo "xxx"
+	COUNTER=$(($COUNTER+1))
+done
+
+
+
+
+
+
+
+$0 指程序名， $1 $2指程序名后面的参数，  相当于C语言main函数的argv[0]、argv[1]、argv[2]
+$# 返回argv的个数，  相当于argc-1
+$@、$*  返回参数列表"$1""$2"等等
+$$ 当前进程号
+
+
+
+
+
+shift命令为左移。  即可以看做参数整体左移一个，第一个参数相当于没了（实际仍存在，只是指针位置		改变），  可以看做数组名+1.
+
+
+
+
+
+shell中的
+函数：
+
+1. echo： -e 解析转义字符； -n  不回车换行。默认情况下echo回显的内容后面跟一个回车换行
+echo -e "hello\n\n"   输出就是hello和两个空行。  不加-e  就输出 hello\n\n
+
+
+2.管道 |：通过管道把一个命令的输出传递给另一个命令做输入。
+
+
+
+3.tee命令：把结果输出到标准输出，另一个副本输出到相应文件。（和管道配合）
+ls -l | tee a.txt      tee -a a.text:这表示追加操作
+
+
+
+4.文件重定向：>输出重定向、>>追加。<输入重定向。< file1  > file2  输入重到file1输出重到file2 
+&fd文件描述符
+文件描述符是在操作系统这一层
+>> file 2>&1  文件描述符2重定向到文件描述符1上。 0：stdin  1：stdout  2：stderr
+
+w+ 覆盖。   a+ 追加。（？？？？？）   若追加的文件不存在，a+创建文件
+
+
+
+
+5.函数：  foo(){echo "hello" }   类似python中的函数
+调用：  echo "xxx";fun;echo "yyy"
+
+
+
+
+
+
+
+
+
+
+shell调试：
+
+1.-n 检测sh脚本内部是否有语法错误    /bin/sh -n t9.sh
+2.-v 一边执行脚本，一边将执行过的脚本命令打印到标准错误输出
+3.-x 将执行的每条命令和结果依次打印出来（设定调试代码的某一段,局部调试 ）
+if [ -z "$1" ];then
+	set -x
+	echo "ERROR:insufficient Args."
+	exit 1
+	set +x
+fi
+
+
+
+（****************************************************************************************************）
+shell编程常用工具：（shell脚本大多数都是启动脚本，开机后执行/etc/init.d里面的脚本（某一个服务的启动脚本  #!/bin/sh））
+
+
+1.grep（根据文件内容过滤选择）：用在正则表达式中：grep  正则表达式（一堆\转义字符）；egrep 扩展正则表达式（没有
+grep [options(参数)]
+grep --help 查看参数
+
+2.find（根据文件名、文件类型、文件创建时间去查找文件） find pathname -options [-printf -exec -ok]
+
+find . -type f -exec ls -l {} \;  {} \为固定格式   
+可以理解为find . -type f | ls -l {} \;   
+与find . -type f -ok ls -l {} \;等价，不过-ok是一个一个询问
+
+find . -type f： 在当前目录下，按照什么条件去找
+ls -l ： exec要执行的命令
+
+find logs -type f -mtime +5 -exec rm {} \;
+找到5天前的日志文件，然后删掉（**********************************************************************）
+
+
+
+5.xargs
+find logs -type f -mtime +5 | xargs rm {} \;   
+xargs 与-exec差不过，不过-exec是等前面的执行完后（例如全部查找到），再执行后面的命令。  等待过程可能会把缓冲区撑爆
+而xargs是前面一边找，后面一边执行。没有等待
+
+
+
+3.sed
+stream editor 流编辑器。  很多sed命令和vi的末行命令使相同的。  基本格式：
+
+sed option 'script' file1 file2 ...              'script'这个相当于正则条件（？？？？）
+sed option -f scriptfile file1 file2 ... 
+
+例如： sed '/abc/p' testfile   在testfile中寻找abc语句，然后在他下面再输出一行abc
+/abc 匹配abc      /p 打印匹配他的行  /d  删除匹配他的行
+
+/p/s/p1/p2  查找符合p的行，将该行第一个匹配p1的字符串替换为p2     s是 search     行处理工具
+/p/s/p1/p2/g  查找符合p的行，将该行所有匹配p1的字符串替换为p2
+ 
+a,append   i,insert    d,delete     s,substitution   替换
+sed "2,5d" testfile:   删除testfile中的2到5行
+
+sed '/bc/-&-/' testfile     &与bc相匹配
+
+
+
+***********************************/////////-----------------------------------
+
+去掉报文的所有<>，保留内容：  sed 's/<[^>]*>/ /g' test.txt     ^>表示匹配除>之外的任意字符，*表示多个，g表示全局
+
+-----------------------------------\\\\\\\\\+++++++++++++++++++++++++++++++++++
+
+
+
+
+5.ps  aux    列操作
+4.awk（处理列）
+
+awk option 'script' file1 file2 ...              'script'这个相当于正则条件（？？？？）
+awk option -f scriptfile file1 file2 ... 
+
+
+
+对awk  $1是第一列元素、$2是第二列元素、$0是对应的行
+awk '$2<75 {printf "%s\t%s\n", $0 , "REORDER";} $2>=75 {printf "%s\n " $0;}' testfile
+输出： productA 30 REORDER 
+	productB 75
+	productC 55 REORDER
+
+
+
+正则表达式中^ *$ 表示一行为空
+所以统计空行数: 
+
+awk '/^ *$/ {x=x+1;} END {printf x}' test.txt;    END表示在这个正则命令的末尾所执行的命令
+
+OFS: 输出格式的列分隔符，缺省是空格。          FS： 输入文件的列分隔符，缺省是连续的空格和tab
+打印系统中的用户账号列表：
+awk 'BEGIN {FS=":"} {print $1;}' /etc/passwd   
+

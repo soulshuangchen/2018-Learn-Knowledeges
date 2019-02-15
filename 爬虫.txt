@@ -1,0 +1,42 @@
+python做去重最常用的就是set   （集合用来去重）
+
+1： 抓包工具
+
+2：urllib2库： 在python3中被改为 urllib.request
+	
+#向指定的url地址发送请求，并返回服务器响应的类文件对象
+response = urllib2.urlopen("http://www.baidu.com/")    /根目录
+
+# 服务器返回的类文件对象支持Python文件对象的操作方法
+# read（）方法就是读取文件里的全部内容，返回字符串
+html = response.read()
+
+
+User-Agent:一定要写的  这是爬虫和反爬虫斗争的第一步
+（这部分的信息可以从浏览器中取得）
+
+Accept-Encoding:一定不能写的
+
+
+3：  response.getcode()  返回HTTP的响应码，成功200,4服务器页面出错，5服务器问题
+     response.geturl()   返回实际数据的的实际URL，防止重定向
+     response.info()     返回服务器响应的HTTP报头
+
+     response 是服务器响应的类文件
+
+
+
+代理列表
+
+
+4：random.choice(ua_list)   在列表里随机选一个值
+
+
+5：url第一个分隔符是?,后面的分隔符(连接符)是&、
+url中%xx%xx%xx ： 这代表了一个汉字
+
+urllib的urlencode()几首的参数是一个字典，他会把汉字进行转码
+wd = {“wd”：“一二三四”}  uellib.urlencode(wd)
+
+6: Get请求：请求的url会附带查询参数   查询参数在QueryString里保存
+   Post请求：请求的url不带参数    查询参数在Form表单里保存    
